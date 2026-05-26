@@ -1,0 +1,9 @@
+{
+  "_comment": "Session input fixture for the 2026 Summer SAS campaign. Provides the blueprint source path and session metadata. Use with scriptedReplay mode or interactiveSession mode.",
+  "blueprintXmlPath": "tests/fixtures/Summer_SAS.xml",
+  "blueprintId": "summer-sas-2026",
+  "sessionMeta": {
+    "label": "2026 Summer Semi-Annual Sale",
+    "description": "Full end-to-end harness fixture for the Summer SAS blueprint (4 promotions, 4 assignments, 35 questions). Covers all field groups: Campaign, Identity, Scheduling, Discounting, Coupons, Merchandising, Storefront, Messaging."
+  }
+}

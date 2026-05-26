@@ -1,0 +1,46 @@
+{
+  "_comment": "Example: $50 fixed-amount off qualifying products. Maps to 2018-April-VIP-Email-Promo-Bday pattern. Note max-applications=1 (one-time use per transaction).",
+  "_sourceFile": "reference/2018-April-VIP-Email-Promo-Bday.xml",
+  "_schemaVersion": "v2",
+  "globalSettings": {
+    "catalogId": "siteCatalog_ToryUS",
+    "excludedCategoryIds": ["Exclusions-Always", "accessories-seedbox-foundation", "accessories-masks"],
+    "excludedProductOptionIds": ["monogramming"]
+  },
+  "promotion": {
+    "id": "birthday-50-off",
+    "name": "Birthday",
+    "calloutMsg": "ONE-TIME-USE-ONLY PROMOTION. NOT VALID ON FOUNDATION PRODUCTS AND GIFT CARDS. VALID 04/01/2018-04/30/2018.",
+    "lifecycle": {
+      "enabled": true,
+      "archived": true,
+      "searchable": false,
+      "refinable": false,
+      "preventRequalifying": false,
+      "prorateAcrossEligibleItems": false
+    },
+    "exclusivity": "class",
+    "ruleType": "product",
+    "discountConditionType": "product-amount",
+    "discountTiers": [
+      { "threshold": 50.0, "kind": "amount", "value": 50.0 }
+    ],
+    "qualifyingProducts": {
+      "conditionGroups": [
+        {
+          "priceCondition": {
+            "operator": "greater than",
+            "price": 0.01
+          }
+        }
+      ]
+    },
+    "productRuleOptions": {
+      "maxApplications": 1
+    },
+    "customAttributes": {
+      "gwp": false,
+      "isExcludeTranslate": false
+    }
+  }
+}

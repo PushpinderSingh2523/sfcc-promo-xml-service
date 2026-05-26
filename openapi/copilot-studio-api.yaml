@@ -1,0 +1,110 @@
+openapi: 3.0.1
+
+info:
+  title: SFCC Runtime
+  version: 1.0.0
+  description: Lightweight Copilot Studio runtime connector for SFCC promotion orchestration.
+
+servers:
+  - url: https://sixtyfold-gray-cactus.ngrok-free.dev
+
+paths:
+
+  /teams/session/start:
+    post:
+      operationId: startTeamsSession
+      summary: Start SAS promotion session
+      x-ms-visibility: important
+
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                intent:
+                  type: string
+
+      responses:
+        '200':
+          description: OK
+
+  /teams/session/answer:
+    post:
+      operationId: submitTeamsAnswer
+      summary: Submit answer
+      x-ms-visibility: important
+
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                sessionId:
+                  type: string
+                rawAnswer:
+                  type: string
+
+      responses:
+        '200':
+          description: OK
+
+  /teams/session/review:
+    post:
+      operationId: reviewTeamsSession
+      summary: Review session
+      x-ms-visibility: important
+
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                sessionId:
+                  type: string
+
+      responses:
+        '200':
+          description: OK
+
+  /teams/session/confirm:
+    post:
+      operationId: confirmTeamsSession
+      summary: Confirm session
+      x-ms-visibility: important
+
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                sessionId:
+                  type: string
+
+      responses:
+        '200':
+          description: OK
+
+  /teams/session/{sessionId}/status:
+    get:
+      operationId: getTeamsSessionStatus
+      summary: Session status
+      x-ms-visibility: important
+
+      parameters:
+        - in: path
+          name: sessionId
+          required: true
+          schema:
+            type: string
+
+      responses:
+        '200':
+          description: OK

@@ -1,0 +1,74 @@
+{
+  "_comment": "Example: Tiered order discount with category qualifying products. Maps to VJTEMP2023DTM pattern: 10% off handbags+watches when total >= $500, 20% off when total >= $2000.",
+  "_sourceFile": "reference/VJTEMP2023DTM.xml",
+  "_schemaVersion": "v2",
+  "globalSettings": {
+    "catalogId": "siteCatalog_ToryUS",
+    "excludedCategoryIds": ["Exclusions-Always", "accessories-seedbox-foundation", "accessories-masks"],
+    "excludedProductOptionIds": ["monogramming"]
+  },
+  "campaign": {
+    "id": "handbags-watches-tiered-sept-2023",
+    "enabled": true,
+    "scope": "online",
+    "startDate": "2023-09-15T05:00:00.000Z",
+    "endDate": "2023-09-20T00:00:00.000Z",
+    "customerGroups": {
+      "matchMode": "any",
+      "groupIds": ["Everyone"]
+    }
+  },
+  "promotion": {
+    "id": "handbags-watches-tiered-sept-2023",
+    "name": "Handbags & Watches Tiered Discount September 2023",
+    "lifecycle": {
+      "enabled": false,
+      "archived": false,
+      "searchable": false,
+      "refinable": false,
+      "preventRequalifying": false,
+      "prorateAcrossEligibleItems": false
+    },
+    "exclusivity": "global",
+    "ruleType": "order",
+    "discountConditionType": "order-total",
+    "discountTiers": [
+      { "threshold": 500.0,  "kind": "percentage", "value": 10.0 },
+      { "threshold": 2000.0, "kind": "percentage", "value": 20.0 }
+    ],
+    "qualifyingProducts": {
+      "conditionGroups": [
+        {
+          "categoryCondition": {
+            "catalogId": "siteCatalog_ToryUS",
+            "operator": "is equal",
+            "categoryIds": ["handbags", "watches"]
+          }
+        }
+      ]
+    },
+    "orderRuleOptions": {
+      "discountOnlyQualifyingProducts": true,
+      "excludeDiscountedProducts": false
+    },
+    "customAttributes": {
+      "enableShowingEmptyThresholdBar": false,
+      "enableShowingFreeShippingLabel": false,
+      "gwp": false,
+      "isCouponOnlyActivatesPromotion": false,
+      "isExcludeTranslate": false,
+      "isForcedShowingExcludedMessage": false
+    }
+  },
+  "assignment": {
+    "promotionId": "handbags-watches-tiered-sept-2023",
+    "campaignId": "handbags-watches-tiered-sept-2023",
+    "qualifiers": {
+      "matchMode": "any",
+      "customerGroupIds": [],
+      "sourceCodes": [],
+      "qualifierCouponIds": []
+    },
+    "activationCoupons": []
+  }
+}

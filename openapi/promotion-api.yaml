@@ -1,0 +1,810 @@
+openapi: 3.0.1
+
+info:
+  title: SFCC Promotion XML Service API
+  version: 2.0.0
+  description: |
+    Converts natural-language promotion descriptions into Salesforce Commerce Cloud (SFCC)
+    compliant promotion XML.
+
+servers:
+  - url: http://localhost:3000
+    description: Local Development
+
+tags:
+  - name: Generation
+  - name: Conversation
+  - name: Validation
+  - name: Import
+  - name: Teams
+  - name: Meta
+
+components:
+
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-api-key
+
+  schemas:
+
+    Discount:
+      type: object
+      required:
+        - discountType
+        - discountValue
+        - threshold
+
+      properties:
+        discountType:
+          type: string
+          enum:
+            - percentage
+            - amount
+            - fixed-price
+            - free-shipping
+
+        discountValue:
+          type: number
+          example: 20
+
+        threshold:
+          type: number
+          example: 100
+
+    LifecycleFlags:
+      type: object
+
+      properties:
+        enabled:
+          type: boolean
+
+        archived:
+          type: boolean
+
+        searchable:
+          type: boolean
+
+        refinable:
+          type: boolean
+
+        preventRequalifying:
+          type: boolean
+
+        prorateAcrossEligibleItems:
+          type: boolean
+
+    CategoryCondition:
+      type: object
+
+      properties:
+        catalogId:
+          type: string
+
+        operator:
+          type: string
+
+        categoryIds:
+          type: array
+          items:
+            type: string
+
+    ConditionGroup:
+      type: object
+
+      properties:
+        categoryCondition:
+          $ref: '#/components/schemas/CategoryCondition'
+
+    Promotion:
+      type: object
+
+      required:
+        - id
+        - name
+        - ruleType
+        - discounts
+
+      properties:
+
+        id:
+          type: string
+
+        name:
+          type: string
+
+        ruleType:
+          type: string
+          enum:
+            - product
+            - order
+            - shipping
+
+        discountConditionType:
+          type: string
+          enum:
+            - product-amount
+            - order-total
+            - shipment-total
+
+        exclusivity:
+          type: string
+          enum:
+            - no
+            - class
+            - global
+
+        lifecycle:
+          $ref: '#/components/schemas/LifecycleFlags'
+
+        discounts:
+          type: array
+          items:
+            $ref: '#/components/schemas/Discount'
+
+        qualifyingProducts:
+          type: object
+
+          properties:
+            conditionGroups:
+              type: array
+              items:
+                $ref: '#/components/schemas/ConditionGroup'
+
+        excludedProducts:
+          type: object
+
+          properties:
+            conditionGroups:
+              type: array
+              items:
+                $ref: '#/components/schemas/ConditionGroup'
+
+    Campaign:
+      type: object
+
+      properties:
+        id:
+          type: string
+
+        enabled:
+          type: boolean
+
+        scope:
+          type: string
+
+        startDate:
+          type: string
+          format: date-time
+
+        endDate:
+          type: string
+          format: date-time
+
+    Assignment:
+      type: object
+
+      properties:
+
+        activationCoupons:
+          type: array
+          items:
+            type: string
+
+        schedule:
+          type: object
+
+          properties:
+            startDate:
+              type: string
+              format: date-time
+
+            endDate:
+              type: string
+              format: date-time
+
+    PromotionDocumentV2:
+      type: object
+
+      required:
+        - globalSettings
+        - promotion
+
+      properties:
+
+        globalSettings:
+          type: object
+
+          properties:
+
+            catalogId:
+              type: string
+
+            excludedCategoryIds:
+              type: array
+              items:
+                type: string
+
+            excludedProductOptionIds:
+              type: array
+              items:
+                type: string
+
+        promotion:
+          $ref: '#/components/schemas/Promotion'
+
+        campaign:
+          $ref: '#/components/schemas/Campaign'
+
+        assignment:
+          $ref: '#/components/schemas/Assignment'
+
+    ClarificationQuestion:
+      type: object
+
+      properties:
+
+        fieldId:
+          type: string
+
+        severity:
+          type: string
+          enum:
+            - critical
+            - recommended
+
+        text:
+          type: string
+
+        hint:
+          type: string
+
+        type:
+          type: string
+          enum:
+            - text
+            - choice
+
+        choices:
+          type: array
+          items:
+            type: string
+
+    ValidationResult:
+      type: object
+
+      properties:
+
+        valid:
+          type: boolean
+
+        errors:
+          type: array
+
+          items:
+            type: object
+
+            properties:
+              field:
+                type: string
+
+              message:
+                type: string
+
+              suggestion:
+                type: string
+
+    GenerateResponse:
+      type: object
+
+      properties:
+
+        success:
+          type: boolean
+
+        requestId:
+          type: string
+
+        sessionId:
+          type: string
+
+        confidence:
+          type: number
+
+        source:
+          type: string
+
+        clarificationRequired:
+          type: boolean
+
+        clarificationQuestions:
+          type: array
+
+          items:
+            $ref: '#/components/schemas/ClarificationQuestion'
+
+        nextQuestion:
+          $ref: '#/components/schemas/ClarificationQuestion'
+
+        warnings:
+          type: array
+          items:
+            type: string
+
+        normalizedDocument:
+          $ref: '#/components/schemas/PromotionDocumentV2'
+
+        xml:
+          type: string
+          nullable: true
+
+    ErrorResponse:
+      type: object
+
+      properties:
+
+        success:
+          type: boolean
+
+        error:
+          type: string
+
+        message:
+          type: string
+
+        requestId:
+          type: string
+
+paths:
+
+  /api/v1/promotions/generate:
+
+    post:
+
+      tags:
+        - Generation
+
+      summary: Generate promotion XML from natural language
+
+      operationId: generatePromotion
+
+      requestBody:
+
+        required: true
+
+        content:
+
+          application/json:
+
+            schema:
+              type: object
+
+              required:
+                - intent
+
+              properties:
+
+                intent:
+                  type: string
+
+      responses:
+
+        '200':
+
+          description: Generated response
+
+          content:
+
+            application/json:
+
+              schema:
+                $ref: '#/components/schemas/GenerateResponse'
+
+  /api/v1/promotions/clarify:
+
+    post:
+
+      tags:
+        - Conversation
+
+      summary: Continue clarification flow
+
+      operationId: clarifyPromotion
+
+      requestBody:
+
+        required: true
+
+        content:
+
+          application/json:
+
+            schema:
+
+              type: object
+
+              required:
+                - sessionId
+                - answer
+
+              properties:
+
+                sessionId:
+                  type: string
+
+                answer:
+                  type: string
+
+      responses:
+
+        '200':
+
+          description: Clarification response
+
+          content:
+
+            application/json:
+
+              schema:
+                $ref: '#/components/schemas/GenerateResponse'
+
+  /api/v1/promotions/preview:
+
+    post:
+
+      tags:
+        - Generation
+
+      summary: Preview promotion
+
+      operationId: previewPromotion
+
+      requestBody:
+
+        required: true
+
+        content:
+
+          application/json:
+
+            schema:
+
+              type: object
+
+              required:
+                - intent
+
+              properties:
+
+                intent:
+                  type: string
+
+      responses:
+
+        '200':
+
+          description: Preview response
+
+  /api/v1/promotions/import-xml:
+
+    post:
+
+      tags:
+        - Import
+
+      summary: Import existing SFCC XML
+
+      operationId: importXml
+
+      requestBody:
+
+        required: true
+
+        content:
+
+          application/json:
+
+            schema:
+
+              type: object
+
+              required:
+                - xml
+
+              properties:
+
+                xml:
+                  type: string
+
+      responses:
+
+        '200':
+
+          description: Import successful
+
+  /api/v1/promotions/validate:
+
+    post:
+
+      tags:
+        - Validation
+
+      summary: Validate XML or document
+
+      operationId: validatePromotion
+
+      requestBody:
+
+        required: true
+
+        content:
+
+          application/json:
+
+            schema:
+
+              type: object
+
+      responses:
+
+        '200':
+
+          description: Validation response
+
+  /api/v1/promotions/capabilities:
+
+    get:
+
+      tags:
+        - Meta
+
+      summary: Get capabilities
+
+      operationId: getCapabilities
+
+      responses:
+
+        '200':
+
+          description: Capabilities
+
+  /health:
+
+    get:
+
+      tags:
+        - Meta
+
+      summary: Health check
+
+      operationId: getHealth
+
+      responses:
+
+        '200':
+
+          description: Service healthy
+
+  /teams/session/start:
+
+    post:
+
+      tags:
+        - Teams
+
+      summary: Start SAS blueprint session
+
+      operationId: startTeamsSession
+
+      requestBody:
+
+        required: true
+
+        content:
+
+          application/json:
+
+            schema:
+
+              type: object
+
+              required:
+                - xml
+                - sessionId
+
+              properties:
+
+                sessionId:
+                  type: string
+
+                xml:
+                  type: string
+
+      responses:
+
+        '200':
+          description: Session started
+
+  /teams/session/answer:
+
+    post:
+
+      tags:
+        - Teams
+
+      summary: Submit answer
+
+      operationId: submitTeamsAnswer
+
+      requestBody:
+
+        required: true
+
+        content:
+
+          application/json:
+
+            schema:
+
+              type: object
+
+              required:
+                - sessionId
+                - fieldId
+                - rawAnswer
+
+              properties:
+
+                sessionId:
+                  type: string
+
+                fieldId:
+                  type: string
+
+                rawAnswer:
+                  oneOf:
+                    - type: string
+                    - type: number
+                    - type: boolean
+                    - type: array
+
+      responses:
+
+        '200':
+          description: Answer accepted
+
+  /teams/session/review:
+
+    post:
+
+      tags:
+        - Teams
+
+      summary: Request review
+
+      operationId: reviewTeamsSession
+
+      requestBody:
+
+        required: true
+
+        content:
+
+          application/json:
+
+            schema:
+
+              type: object
+
+              required:
+                - sessionId
+
+              properties:
+
+                sessionId:
+                  type: string
+
+      responses:
+
+        '200':
+          description: Review generated
+
+  /teams/session/confirm:
+
+    post:
+
+      tags:
+        - Teams
+
+      summary: Confirm and generate XML
+
+      operationId: confirmTeamsSession
+
+      requestBody:
+
+        required: true
+
+        content:
+
+          application/json:
+
+            schema:
+
+              type: object
+
+              required:
+                - sessionId
+
+              properties:
+
+                sessionId:
+                  type: string
+
+      responses:
+
+        '200':
+          description: XML generated
+
+  /teams/session/cancel:
+
+    post:
+
+      tags:
+        - Teams
+
+      summary: Cancel session
+
+      operationId: cancelTeamsSession
+
+      requestBody:
+
+        required: true
+
+        content:
+
+          application/json:
+
+            schema:
+
+              type: object
+
+              required:
+                - sessionId
+
+              properties:
+
+                sessionId:
+                  type: string
+
+      responses:
+
+        '200':
+          description: Session cancelled
+
+  /teams/session/{sessionId}/status:
+
+    get:
+
+      tags:
+        - Teams
+
+      summary: Get session status
+
+      operationId: getTeamsSessionStatus
+
+      parameters:
+
+        - in: path
+
+          name: sessionId
+
+          required: true
+
+          schema:
+            type: string
+
+      responses:
+
+        '200':
+          description: Session status

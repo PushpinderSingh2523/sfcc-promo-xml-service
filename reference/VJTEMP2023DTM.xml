@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<promotions xmlns="http://www.demandware.com/xml/impex/promotion/2008-01-31">
+    <campaign campaign-id="New Campaign - 9/15/23 5:27:21 am">
+        <enabled-flag>true</enabled-flag>
+        <campaign-scope>
+            <applicable-online/>
+        </campaign-scope>
+        <start-date>2023-09-15T05:00:00.000Z</start-date>
+        <end-date>2023-09-20T00:00:00.000Z</end-date>
+        <customer-groups match-mode="any">
+            <customer-group group-id="Everyone"/>
+        </customer-groups>
+    </campaign>
+
+    <global-promotion-settings>
+        <global-excluded-products>
+            <included-products>
+                <condition-group>
+                    <category-condition catalog-id="siteCatalog_ToryUS" operator="is equal">
+                        <category-id>Exclusions-Always</category-id>
+                    </category-condition>
+                </condition-group>
+                <condition-group>
+                    <category-condition catalog-id="siteCatalog_ToryUS" operator="is equal">
+                        <category-id>accessories-seedbox-foundation</category-id>
+                    </category-condition>
+                </condition-group>
+                <condition-group>
+                    <category-condition catalog-id="siteCatalog_ToryUS" operator="is equal">
+                        <category-id>accessories-masks</category-id>
+                    </category-condition>
+                </condition-group>
+            </included-products>
+        </global-excluded-products>
+        <global-excluded-product-options>
+            <product-option-id>monogramming</product-option-id>
+        </global-excluded-product-options>
+    </global-promotion-settings>
+
+    <promotion promotion-id="VJTEMP2023DTM">
+        <enabled-flag>false</enabled-flag>
+        <archived-flag>false</archived-flag>
+        <searchable-flag>false</searchable-flag>
+        <refinable-flag>false</refinable-flag>
+        <prevent-requalifying-flag>false</prevent-requalifying-flag>
+        <prorate-across-eligible-items-flag>false</prorate-across-eligible-items-flag>
+        <exclusivity>global</exclusivity>
+        <name xml:lang="x-default">VJTEMP2023DTM</name>
+        <custom-attributes>
+            <custom-attribute attribute-id="enableShowingEmptyThresholdBar">false</custom-attribute>
+            <custom-attribute attribute-id="enableShowingFreeShippingLabel">false</custom-attribute>
+            <custom-attribute attribute-id="gwp">false</custom-attribute>
+            <custom-attribute attribute-id="isCouponOnlyActivatesPromotion">false</custom-attribute>
+            <custom-attribute attribute-id="isExcludeTranslate">false</custom-attribute>
+            <custom-attribute attribute-id="isForcedShowingExcludedMessage">false</custom-attribute>
+        </custom-attributes>
+        <order-promotion-rule>
+            <qualifying-products>
+                <included-products>
+                    <condition-group>
+                        <category-condition catalog-id="siteCatalog_ToryUS" operator="is equal">
+                            <category-id>handbags</category-id>
+                            <category-id>watches</category-id>
+                        </category-condition>
+                    </condition-group>
+                </included-products>
+            </qualifying-products>
+            <discount-only-qualifying-products>true</discount-only-qualifying-products>
+            <discounts condition-type="order-total">
+                <discount>
+                    <threshold>500.0</threshold>
+                    <percentage>10.0</percentage>
+                </discount>
+                <discount>
+                    <threshold>2000.0</threshold>
+                    <percentage>20.0</percentage>
+                </discount>
+            </discounts>
+            <exclude-discounted-products>false</exclude-discounted-products>
+        </order-promotion-rule>
+    </promotion>
+
+    <promotion-campaign-assignment promotion-id="VJTEMP2023DTM" campaign-id="New Campaign - 9/15/23 5:27:21 am">
+        <qualifiers match-mode="any">
+            <customer-groups/>
+            <source-codes/>
+            <coupons/>
+        </qualifiers>
+    </promotion-campaign-assignment>
+
+</promotions>

@@ -1,0 +1,18 @@
+{
+  "id": "summer-10pct-off",
+  "campaignId": "summer-sale-2025",
+  "name": "Summer Sale - 10% Off Orders Over $50",
+  "description": "Get 10% off your order when you spend $50 or more during the summer sale.",
+  "enabled": true,
+  "exclusivity": "no",
+  "discountType": "percentage",
+  "discountValue": 10,
+  "conditionType": "minimum-amount",
+  "conditionValue": 50,
+  "couponCode": null,
+  "startDate": "2025-06-01T00:00:00.000Z",
+  "endDate": "2025-08-31T23:59:59.000Z",
+  "qualifyingProductIds": [],
+  "targetProductIds": [],
+  "currency": "USD"
+}

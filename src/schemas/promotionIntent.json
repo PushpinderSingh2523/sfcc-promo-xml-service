@@ -1,0 +1,99 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "promotionIntent",
+  "title": "SFCC Promotion Intent",
+  "description": "JSON schema for the structured promotion intent parsed by Claude.",
+  "type": "object",
+  "required": [
+    "id",
+    "campaignId",
+    "name",
+    "enabled",
+    "exclusivity",
+    "discountType",
+    "discountValue",
+    "conditionType",
+    "startDate",
+    "endDate"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 50,
+      "pattern": "^[a-z0-9-]+$",
+      "description": "Kebab-case promotion identifier."
+    },
+    "campaignId": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 50,
+      "pattern": "^[a-z0-9-]+$"
+    },
+    "name": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 100
+    },
+    "description": {
+      "type": "string",
+      "maxLength": 500
+    },
+    "enabled": {
+      "type": "boolean"
+    },
+    "exclusivity": {
+      "type": "string",
+      "enum": ["no", "class", "global"]
+    },
+    "discountType": {
+      "type": "string",
+      "enum": ["percentage", "fixed-price", "amount-off", "free-shipping", "bonus-product"]
+    },
+    "discountValue": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 100000
+    },
+    "conditionType": {
+      "type": "string",
+      "enum": ["none", "minimum-amount", "minimum-quantity", "coupon"]
+    },
+    "conditionValue": {
+      "oneOf": [
+        { "type": "number", "minimum": 0 },
+        { "type": "null" }
+      ]
+    },
+    "couponCode": {
+      "oneOf": [
+        { "type": "string", "minLength": 1, "maxLength": 100 },
+        { "type": "null" }
+      ]
+    },
+    "startDate": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "endDate": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "qualifyingProductIds": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 },
+      "default": []
+    },
+    "targetProductIds": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 },
+      "default": []
+    },
+    "currency": {
+      "type": "string",
+      "enum": ["USD", "GBP", "EUR", "CAD", "AUD"],
+      "default": "USD"
+    }
+  }
+}

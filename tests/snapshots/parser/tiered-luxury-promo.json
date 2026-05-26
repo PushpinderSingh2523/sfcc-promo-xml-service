@@ -1,0 +1,11 @@
+{
+  "_description": "Tiered order discount on handbags and watches",
+  "intent": "10% off on orders over $500 and 20% off on orders over $2000 on handbags and watches in September",
+  "expectedRuleType": "order",
+  "expectedDiscountTiers": [
+    { "threshold": 500, "kind": "percentage", "value": 10 },
+    { "threshold": 2000, "kind": "percentage", "value": 20 }
+  ],
+  "expectedCategories": ["handbags", "watches"],
+  "expectedDiscountConditionType": "order-total"
+}

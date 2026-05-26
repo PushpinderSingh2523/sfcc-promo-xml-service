@@ -1,0 +1,83 @@
+{
+  // ── Editor — cross-platform safe defaults ───────────────────────────────────
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.tabSize": 2,
+  "editor.insertSpaces": true,
+  "editor.detectIndentation": false,
+  "editor.rulers": [100],
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit"
+  },
+
+  // ── Files — LF everywhere (critical for Mac ↔ Windows) ─────────────────────
+  "files.eol": "\n",
+  "files.encoding": "utf8",
+  "files.trimTrailingWhitespace": true,
+  "files.insertFinalNewline": true,
+  "files.trimFinalNewlines": true,
+
+  // ── Files to exclude from explorer (generated / OS junk) ───────────────────
+  "files.exclude": {
+    "node_modules": true,
+    "coverage": true,
+    "**/.DS_Store": true,
+    "**/Thumbs.db": true,
+    "runtime/sessions": true,
+    "runtime/exports": true,
+    "runtime/imports": true,
+    "runtime/traces": true,
+    "runtime/logs": true,
+    "output": true,
+    "logs": true
+  },
+
+  // ── Search — skip large / generated directories ─────────────────────────────
+  "search.exclude": {
+    "**/node_modules": true,
+    "**/coverage": true,
+    "**/runtime/sessions": true,
+    "**/output": true,
+    "**/logs": true,
+    "**/*.ndjson": true
+  },
+
+  // ── JavaScript ──────────────────────────────────────────────────────────────
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[jsonc]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[markdown]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.wordWrap": "on"
+  },
+  "[xml]": {
+    "editor.formatOnSave": false
+  },
+
+  // ── ESLint ──────────────────────────────────────────────────────────────────
+  "eslint.validate": ["javascript"],
+  "eslint.workingDirectories": ["."],
+
+  // ── Terminal — cross-platform shell defaults ─────────────────────────────────
+  "terminal.integrated.defaultProfile.windows": "Git Bash",
+  "terminal.integrated.defaultProfile.osx": "zsh",
+  "terminal.integrated.defaultProfile.linux": "bash",
+
+  // ── Jest (for VS Code Jest extension) ───────────────────────────────────────
+  "jest.jestCommandLine": "npx jest",
+  "jest.autoRun": "off",
+
+  // ── Emmet ───────────────────────────────────────────────────────────────────
+  "emmet.showAbbreviationSuggestions": false,
+
+  // ── Git ─────────────────────────────────────────────────────────────────────
+  "git.autofetch": true,
+  "git.confirmSync": false,
+  "git.enableSmartCommit": false
+}

@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  SFCC Promotion XML Reference Template
+  Source: Salesforce Commerce Cloud Business Manager > Merchant Tools > Promotions > Export
+  This file is a reference template only. XML is generated programmatically by xmlService.js.
+  Do not modify this file for production use — update xmlService.js instead.
+-->
+<promotions xmlns="http://www.demandware.com/xml/impex/promotion/2008-01-31">
+
+  <!-- Example 1: Percentage discount on orders over a minimum amount -->
+  <promotion campaign-id="summer-sale-2025" enabled="true" exclusivity="no" id="summer-10pct-off">
+    <name>Summer Sale - 10% Off Orders Over $50</name>
+    <description>Get 10% off your order when you spend $50 or more during the summer sale.</description>
+    <discount>
+      <order-discount>
+        <discount>
+          <percentage>10</percentage>
+        </discount>
+      </order-discount>
+    </discount>
+    <eligibility>
+      <order-condition>
+        <subtotal-condition>
+          <subtotal operator="greater-than-or-equal">50</subtotal>
+        </subtotal-condition>
+      </order-condition>
+    </eligibility>
+    <start-date>2025-06-01T00:00:00.000Z</start-date>
+    <end-date>2025-08-31T23:59:59.000Z</end-date>
+  </promotion>
+
+  <!-- Example 2: Fixed amount off with coupon code -->
+  <promotion campaign-id="loyalty-2025" enabled="true" exclusivity="no" id="loyalty-20-off">
+    <name>Loyalty $20 Off - Coupon</name>
+    <description>$20 off your purchase with coupon code LOYAL20.</description>
+    <discount>
+      <order-discount>
+        <discount>
+          <amount>20</amount>
+        </discount>
+      </order-discount>
+    </discount>
+    <eligibility>
+      <coupon-condition>
+        <coupon-code>LOYAL20</coupon-code>
+      </coupon-condition>
+    </eligibility>
+    <start-date>2025-01-01T00:00:00.000Z</start-date>
+    <end-date>2025-12-31T23:59:59.000Z</end-date>
+  </promotion>
+
+  <!-- Example 3: Free shipping on all orders -->
+  <promotion campaign-id="free-shipping-2025" enabled="true" exclusivity="no" id="free-standard-shipping">
+    <name>Free Standard Shipping</name>
+    <description>Free standard shipping on all orders, no minimum.</description>
+    <discount>
+      <shipping-discount>
+        <discount>
+          <fixed-price>0</fixed-price>
+        </discount>
+      </shipping-discount>
+    </discount>
+    <eligibility>
+      <order-condition/>
+    </eligibility>
+    <start-date>2025-03-01T00:00:00.000Z</start-date>
+    <end-date>2025-03-31T23:59:59.000Z</end-date>
+  </promotion>
+
+  <!-- Example 4: Bonus product promotion -->
+  <promotion campaign-id="gift-with-purchase-2025" enabled="true" exclusivity="class" id="gwp-summer">
+    <name>Gift With Purchase - Summer</name>
+    <description>Choose a free gift when you purchase any qualifying product.</description>
+    <discount>
+      <product-discount>
+        <discount>
+          <bonus-choice-count>1</bonus-choice-count>
+        </discount>
+      </product-discount>
+    </discount>
+    <eligibility>
+      <order-condition>
+        <subtotal-condition>
+          <subtotal operator="greater-than-or-equal">75</subtotal>
+        </subtotal-condition>
+      </order-condition>
+    </eligibility>
+    <qualifying-products>
+      <product-id>product-SKU-001</product-id>
+      <product-id>product-SKU-002</product-id>
+    </qualifying-products>
+    <discounted-products>
+      <product-id>gift-product-SKU-A</product-id>
+      <product-id>gift-product-SKU-B</product-id>
+    </discounted-products>
+    <start-date>2025-06-01T00:00:00.000Z</start-date>
+    <end-date>2025-08-31T23:59:59.000Z</end-date>
+  </promotion>
+
+</promotions>

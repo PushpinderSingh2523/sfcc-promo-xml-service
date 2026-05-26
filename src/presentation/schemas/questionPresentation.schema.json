@@ -1,0 +1,134 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "questionPresentation",
+  "title": "Question Presentation",
+  "description": "Presentation-safe representation of a single clarification question for Teams/Copilot rendering.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "type", "key", "group", "label", "question", "required",
+    "currentValue", "replayCritical", "xmlLang", "slotContext",
+    "progress", "choices", "validationHints", "retryMetadata"
+  ],
+  "properties": {
+    "type": {
+      "type": "string",
+      "const": "question",
+      "description": "Discriminator for presentation type routing."
+    },
+    "key": {
+      "type": "string",
+      "description": "Stable answer key in format fieldId::slotType::slotIndex::xmlLang."
+    },
+    "group": {
+      "type": "string",
+      "description": "Registry group name from GROUP_ORDER."
+    },
+    "label": {
+      "type": "string",
+      "description": "Human-readable field label from registry. Verbatim — never rewritten."
+    },
+    "question": {
+      "type": "string",
+      "description": "Question text from registry. Verbatim — never rewritten."
+    },
+    "required": {
+      "type": "boolean",
+      "description": "Whether this field must be answered for session completion."
+    },
+    "currentValue": {
+      "description": "Prior-season value from blueprint. Null when field was not set."
+    },
+    "replayCritical": {
+      "type": "boolean",
+      "description": "When true, changing this value triggers a replay safety warning."
+    },
+    "xmlLang": {
+      "type": ["string", "null"],
+      "description": "Locale tag for localized fields (e.g. 'x-default', 'en'). Null for non-localized."
+    },
+    "slotContext": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["slotType", "slotIndex"],
+      "properties": {
+        "slotType": {
+          "type": ["string", "null"],
+          "description": "campaign | promotion | assignment"
+        },
+        "slotIndex": {
+          "type": ["integer", "null"],
+          "description": "Zero-based slot position. Null for campaign (singleton)."
+        }
+      }
+    },
+    "progress": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["currentGroup", "completedInGroup", "totalInGroup", "overallPercentage"],
+      "properties": {
+        "currentGroup": {
+          "type": "string",
+          "description": "Group name this question belongs to."
+        },
+        "completedInGroup": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Number of validly answered questions in this group."
+        },
+        "totalInGroup": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Total questions in this group."
+        },
+        "overallPercentage": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 100,
+          "description": "Session-wide completion percentage (0–100)."
+        }
+      }
+    },
+    "choices": {
+      "type": ["array", "null"],
+      "description": "Allowed values for enum fields. Null for free-form fields.",
+      "items": {
+        "type": "string"
+      }
+    },
+    "validationHints": {
+      "type": "array",
+      "description": "Human-readable hints derived from the registry validation spec.",
+      "items": {
+        "type": "string"
+      }
+    },
+    "retryMetadata": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["isRetry", "validationErrors", "priorRawValue"],
+      "properties": {
+        "isRetry": {
+          "type": "boolean",
+          "description": "True when re-asking due to a previous validation failure."
+        },
+        "validationErrors": {
+          "type": "array",
+          "description": "Validation errors from the previous attempt.",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["rule", "message"],
+            "properties": {
+              "rule":    { "type": "string" },
+              "message": { "type": "string" }
+            }
+          }
+        },
+        "priorRawValue": {
+          "description": "The rejected raw value from the previous attempt. Null on first attempt."
+        }
+      }
+    }
+  }
+}

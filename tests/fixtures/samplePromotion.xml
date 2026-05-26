@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<promotions xmlns="http://www.demandware.com/xml/impex/promotion/2008-01-31">
+  <global-promotion-settings>
+    <global-excluded-products>
+      <included-products>
+        <condition-group>
+          <category-condition catalog-id="siteCatalog_ToryUS" operator="is equal">
+            <category-id>Exclusions-Always</category-id>
+          </category-condition>
+        </condition-group>
+      </included-products>
+    </global-excluded-products>
+    <global-excluded-product-options>
+      <product-option-id>monogramming</product-option-id>
+    </global-excluded-product-options>
+  </global-promotion-settings>
+
+  <promotion promotion-id="summer-10pct-off">
+    <enabled-flag>true</enabled-flag>
+    <archived-flag>false</archived-flag>
+    <searchable-flag>false</searchable-flag>
+    <refinable-flag>false</refinable-flag>
+    <prevent-requalifying-flag>false</prevent-requalifying-flag>
+    <prorate-across-eligible-items-flag>false</prorate-across-eligible-items-flag>
+    <exclusivity>no</exclusivity>
+    <name xml:lang="x-default">Summer Sale - 10% Off Orders Over $50</name>
+    <custom-attributes>
+      <custom-attribute attribute-id="gwp">false</custom-attribute>
+      <custom-attribute attribute-id="isExcludeTranslate">false</custom-attribute>
+    </custom-attributes>
+    <order-promotion-rule>
+      <discount-only-qualifying-products>false</discount-only-qualifying-products>
+      <discounts condition-type="order-total">
+        <discount>
+          <threshold>50</threshold>
+          <percentage>10</percentage>
+        </discount>
+      </discounts>
+      <exclude-discounted-products>false</exclude-discounted-products>
+    </order-promotion-rule>
+  </promotion>
+</promotions>

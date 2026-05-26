@@ -1,0 +1,151 @@
+{
+  "_comment": "Full scripted replay fixture for Summer_SAS.xml — all 35 answers. Answer values are the 2026 updated versions (campaign year bump, dates shifted to 2026). Keys follow the canonical format: fieldId::slotType::slotIndex::xmlLang where null becomes '_'.",
+  "sessionInput": "fixtures/sas-session-inputs/summer-sas-2026.json",
+  "answers": [
+    {
+      "key": "campaignId::campaign::_::_",
+      "value": "2026_SUMMER_SAS",
+      "_note": "replayCritical — must match XML campaign-id attribute exactly"
+    },
+    {
+      "key": "name::promotion::0::x-default",
+      "value": "Promo Applied"
+    },
+    {
+      "key": "name::promotion::0::en",
+      "value": "Promo Applied"
+    },
+    {
+      "key": "promotionId::promotion::0::_",
+      "value": "2026-SUMMER-SAS-APPEASEMENT",
+      "_note": "replayCritical — must match XML promotion-id attribute exactly"
+    },
+    {
+      "key": "name::promotion::1::x-default",
+      "value": "Promo Applied"
+    },
+    {
+      "key": "name::promotion::1::en",
+      "value": "Promo Applied"
+    },
+    {
+      "key": "promotionId::promotion::1::_",
+      "value": "2026_SUMMER_SAS",
+      "_note": "replayCritical"
+    },
+    {
+      "key": "name::promotion::2::x-default",
+      "value": "$50 off $250"
+    },
+    {
+      "key": "promotionId::promotion::2::_",
+      "value": "2026_Summer_SAS_BB50OFF",
+      "_note": "replayCritical"
+    },
+    {
+      "key": "name::promotion::3::x-default",
+      "value": "You have received 25% off"
+    },
+    {
+      "key": "promotionId::promotion::3::_",
+      "value": "2026_Summer_SAS_WebApp",
+      "_note": "replayCritical"
+    },
+    {
+      "key": "endDate::assignment::0::_",
+      "value": "2026-07-08T04:00:00.000Z"
+    },
+    {
+      "key": "endDate::assignment::1::_",
+      "value": "2026-07-08T07:15:00.000Z"
+    },
+    {
+      "key": "endDate::assignment::2::_",
+      "value": "2026-07-25T04:00:00.000Z"
+    },
+    {
+      "key": "endDate::assignment::3::_",
+      "value": "2026-07-29T04:00:00.000Z"
+    },
+    {
+      "key": "startDate::assignment::3::_",
+      "value": "2026-07-07T04:00:00.000Z"
+    },
+    {
+      "key": "simpleDiscountValue::promotion::0::_",
+      "value": 25
+    },
+    {
+      "key": "simpleDiscountValue::promotion::1::_",
+      "value": 25
+    },
+    {
+      "key": "discountEntries::promotion::2::_",
+      "value": [{ "threshold": 250, "discountValue": 50 }]
+    },
+    {
+      "key": "discountEntries::promotion::3::_",
+      "value": [{ "threshold": 0.01, "discountValue": 25 }]
+    },
+    {
+      "key": "couponIds::assignment::0::_",
+      "value": ["2026-Summer-SAS-CS"]
+    },
+    {
+      "key": "couponIds::assignment::2::_",
+      "value": ["2026_Summer_SAS_BB"]
+    },
+    {
+      "key": "includedBadge::promotion::1::x-default",
+      "value": "{price} after extra 25% off"
+    },
+    {
+      "key": "includedBadgeSPP::promotion::1::x-default",
+      "value": "{price} after extra 25% off"
+    },
+    {
+      "key": "storefront_msg_cart_exclusion::promotion::0::x-default",
+      "value": "Excluded From Promotion"
+    },
+    {
+      "key": "storefront_msg_cart_inclusion::promotion::0::x-default",
+      "value": "25% Off Discount Applied"
+    },
+    {
+      "key": "storefront_msg_cart_exclusion::promotion::1::x-default",
+      "value": "Excluded from Semi-Annual Sale"
+    },
+    {
+      "key": "storefront_msg_cart_inclusion::promotion::1::x-default",
+      "value": "Extra 25% Off Discount Applied"
+    },
+    {
+      "key": "storefront_msg_cart_exclusion::promotion::2::x-default",
+      "value": "Excluded From $50 Off $250"
+    },
+    {
+      "key": "storefront_msg_cart_inclusion::promotion::2::x-default",
+      "value": "You Have Received $50 Off"
+    },
+    {
+      "key": "storefront_msg_cart_exclusion::promotion::3::x-default",
+      "value": "Excluded from Semi-Annual Sale"
+    },
+    {
+      "key": "storefront_msg_cart_inclusion::promotion::3::x-default",
+      "value": "Extra 25% Discount Applied"
+    },
+    {
+      "key": "couponErrorMsgNoActivePromotion::promotion::0::x-default",
+      "value": "This promo code has expired"
+    },
+    {
+      "key": "couponErrorMsgRedemptionLimitExeeded::promotion::0::x-default",
+      "value": "This promo code has already been used"
+    },
+    {
+      "key": "couponErrorMsgNoApplicablePromotion::promotion::2::x-default",
+      "value": "Promotion requires minimum spend of $250 on included products."
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "_description": "VIP two-day free shipping activated by coupon",
+  "intent": "Free two-day shipping for VIP customers with coupon VIP2024SHIP, valid July to September",
+  "expectedRuleType": "shipping",
+  "expectedDiscountKind": "free",
+  "expectedShippingMethods": ["twoday"],
+  "expectedExclusivity": "class",
+  "expectedCustomerGroups": ["VIP"],
+  "expectedActivationCoupons": ["VIP2024SHIP"]
+}

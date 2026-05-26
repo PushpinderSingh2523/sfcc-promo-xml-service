@@ -1,0 +1,122 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "reviewPresentation",
+  "title": "Review Presentation",
+  "description": "Presentation-safe grouped review summary for Teams/Copilot business confirmation screens.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "type", "sessionStatus", "completionPercentage",
+    "groups", "replayWarnings", "reviewRequired"
+  ],
+  "properties": {
+    "type": {
+      "type": "string",
+      "const": "review"
+    },
+    "sessionStatus": {
+      "type": "string",
+      "enum": ["CREATED", "IN_PROGRESS", "VALIDATION_FAILED", "REVIEW_PENDING", "COMPLETE", "CANCELLED"]
+    },
+    "completionPercentage": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 100
+    },
+    "groups": {
+      "type": "array",
+      "description": "Grouped field summaries in GROUP_ORDER. Empty groups omitted.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["group", "fields"],
+        "properties": {
+          "group": { "type": "string" },
+          "fields": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "fieldId", "key", "label", "xmlLang", "slotContext",
+                "required", "replayCritical", "priorValue", "newValue",
+                "changed", "answered", "valid", "validationErrors"
+              ],
+              "properties": {
+                "fieldId":        { "type": "string" },
+                "key":            { "type": "string" },
+                "label":          { "type": "string" },
+                "xmlLang":        { "type": ["string", "null"] },
+                "slotContext": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": ["slotType", "slotIndex"],
+                  "properties": {
+                    "slotType":  { "type": ["string", "null"] },
+                    "slotIndex": { "type": ["integer", "null"] }
+                  }
+                },
+                "required":       { "type": "boolean" },
+                "replayCritical": { "type": "boolean" },
+                "priorValue":     { "description": "Prior-season value (any type or null)." },
+                "newValue":       { "description": "Newly answered value (any type or null)." },
+                "changed": {
+                  "type": ["boolean", "null"],
+                  "description": "true=changed, false=unchanged, null=not yet answered."
+                },
+                "answered":       { "type": "boolean" },
+                "valid":          { "type": "boolean" },
+                "validationErrors": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": ["rule", "message"],
+                    "properties": {
+                      "rule":    { "type": "string" },
+                      "message": { "type": "string" }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "replayWarnings": {
+      "type": "array",
+      "description": "Replay safety warnings in source order from orchestrator.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "severity", "fieldId", "key", "slotContext",
+          "message", "priorValue", "newValue", "acknowledgementRequired"
+        ],
+        "properties": {
+          "severity":               { "type": "string", "const": "HIGH" },
+          "fieldId":                { "type": "string" },
+          "key":                    { "type": "string" },
+          "slotContext": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["slotType", "slotIndex"],
+            "properties": {
+              "slotType":  { "type": ["string", "null"] },
+              "slotIndex": { "type": ["integer", "null"] }
+            }
+          },
+          "message":                { "type": "string" },
+          "priorValue":             {},
+          "newValue":               {},
+          "acknowledgementRequired": { "type": "boolean", "const": true }
+        }
+      }
+    },
+    "reviewRequired": {
+      "type": "boolean",
+      "description": "True when replayWarnings is non-empty."
+    }
+  }
+}

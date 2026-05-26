@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<promotions xmlns="http://www.demandware.com/xml/impex/promotion/2008-01-31">
+    <global-promotion-settings>
+        <global-excluded-products>
+            <included-products>
+                <condition-group>
+                    <category-condition catalog-id="siteCatalog_ToryUS" operator="is equal">
+                        <category-id>Exclusions-Always</category-id>
+                    </category-condition>
+                </condition-group>
+                <condition-group>
+                    <category-condition catalog-id="siteCatalog_ToryUS" operator="is equal">
+                        <category-id>accessories-seedbox-foundation</category-id>
+                    </category-condition>
+                </condition-group>
+                <condition-group>
+                    <category-condition catalog-id="siteCatalog_ToryUS" operator="is equal">
+                        <category-id>accessories-masks</category-id>
+                    </category-condition>
+                </condition-group>
+            </included-products>
+        </global-excluded-products>
+        <global-excluded-product-options>
+            <product-option-id>monogramming</product-option-id>
+        </global-excluded-product-options>
+    </global-promotion-settings>
+
+    <promotion promotion-id="2018-THANKS-TEST">
+        <enabled-flag>true</enabled-flag>
+        <archived-flag>true</archived-flag>
+        <searchable-flag>false</searchable-flag>
+        <refinable-flag>false</refinable-flag>
+        <prevent-requalifying-flag>false</prevent-requalifying-flag>
+        <prorate-across-eligible-items-flag>false</prorate-across-eligible-items-flag>
+        <exclusivity>class</exclusivity>
+        <name xml:lang="x-default">THANKS TEST</name>
+        <custom-attributes>
+            <custom-attribute attribute-id="gwp">false</custom-attribute>
+            <custom-attribute attribute-id="isExcludeTranslate">false</custom-attribute>
+        </custom-attributes>
+        <product-promotion-rule>
+            <qualifying-products>
+                <included-products>
+                    <condition-group>
+                        <price-condition operator="greater than">
+                            <price>0.01</price>
+                        </price-condition>
+                    </condition-group>
+                </included-products>
+            </qualifying-products>
+            <discounts condition-type="product-amount">
+                <discount>
+                    <threshold>0.01</threshold>
+                    <percentage>30.0</percentage>
+                </discount>
+            </discounts>
+        </product-promotion-rule>
+    </promotion>
+
+</promotions>

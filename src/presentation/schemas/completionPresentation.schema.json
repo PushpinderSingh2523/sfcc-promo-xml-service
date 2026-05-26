@@ -1,0 +1,118 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "completionPresentation",
+  "title": "Completion Presentation",
+  "description": "Presentation-safe completion summary for Teams/Copilot final confirmation display.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "type", "sessionId", "blueprintId", "status",
+    "completionPercentage", "promotionCount", "assignmentCount",
+    "answeredFields", "totalFields", "payloadReady",
+    "warningsAcknowledged", "replayWarnings", "changedFields"
+  ],
+  "properties": {
+    "type": {
+      "type": "string",
+      "const": "completion"
+    },
+    "sessionId": {
+      "type": "string"
+    },
+    "blueprintId": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": ["CREATED", "IN_PROGRESS", "VALIDATION_FAILED", "REVIEW_PENDING", "COMPLETE", "CANCELLED"]
+    },
+    "completionPercentage": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 100
+    },
+    "promotionCount": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Number of promotion slots in the blueprint."
+    },
+    "assignmentCount": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Number of assignment slots in the blueprint."
+    },
+    "answeredFields": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Number of validly answered fields (excludes invalid)."
+    },
+    "totalFields": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Total fields in the question queue."
+    },
+    "payloadReady": {
+      "type": "boolean",
+      "description": "True when session.status === COMPLETE. Renderer payload can be built."
+    },
+    "warningsAcknowledged": {
+      "type": "boolean",
+      "description": "True when reviewRequired=false OR reviewConfirmedAt is set."
+    },
+    "replayWarnings": {
+      "type": "array",
+      "description": "Replay safety warnings in source order.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "severity", "fieldId", "key", "slotContext",
+          "message", "priorValue", "newValue", "acknowledgementRequired"
+        ],
+        "properties": {
+          "severity":               { "type": "string", "const": "HIGH" },
+          "fieldId":                { "type": "string" },
+          "key":                    { "type": "string" },
+          "slotContext": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["slotType", "slotIndex"],
+            "properties": {
+              "slotType":  { "type": ["string", "null"] },
+              "slotIndex": { "type": ["integer", "null"] }
+            }
+          },
+          "message":                { "type": "string" },
+          "priorValue":             {},
+          "newValue":               {},
+          "acknowledgementRequired": { "type": "boolean", "const": true }
+        }
+      }
+    },
+    "changedFields": {
+      "type": "array",
+      "description": "Fields whose answered normalizedValue differs from their prior-season currentValue.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["fieldId", "key", "label", "slotContext", "priorValue", "newValue"],
+        "properties": {
+          "fieldId": { "type": "string" },
+          "key":     { "type": "string" },
+          "label":   { "type": "string" },
+          "slotContext": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["slotType", "slotIndex"],
+            "properties": {
+              "slotType":  { "type": ["string", "null"] },
+              "slotIndex": { "type": ["integer", "null"] }
+            }
+          },
+          "priorValue": {},
+          "newValue":   {}
+        }
+      }
+    }
+  }
+}

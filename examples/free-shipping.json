@@ -1,0 +1,75 @@
+{
+  "_comment": "Example: Free two-day shipping via coupon code. Maps to VIP-2024-Free-Two-Day-Shipping pattern.",
+  "_sourceFile": "reference/VIP-2024-Free-Two-Day-Shipping.xml",
+  "_schemaVersion": "v2",
+  "globalSettings": {
+    "catalogId": "siteCatalog_ToryUS",
+    "excludedCategoryIds": ["Exclusions-Always", "accessories-seedbox-foundation", "accessories-masks"],
+    "excludedProductOptionIds": ["monogramming"]
+  },
+  "campaign": {
+    "id": "vip-2024-free-two-day-shipping",
+    "enabled": true,
+    "scope": "online"
+  },
+  "promotion": {
+    "id": "vip-2024-free-two-day-shipping",
+    "name": "Free 2 Day Shipping",
+    "calloutMsg": "Free 2 Day Shipping",
+    "lifecycle": {
+      "enabled": true,
+      "archived": false,
+      "searchable": false,
+      "refinable": false,
+      "preventRequalifying": false,
+      "prorateAcrossEligibleItems": false
+    },
+    "exclusivity": "no",
+    "ruleType": "shipping",
+    "discountConditionType": "shipment-total",
+    "discountTiers": [
+      { "threshold": 0.01, "kind": "free" }
+    ],
+    "qualifyingProducts": {
+      "conditionGroups": [
+        {
+          "priceCondition": {
+            "operator": "greater than",
+            "price": 0.01
+          }
+        }
+      ]
+    },
+    "shippingRuleOptions": {
+      "methodIds": ["twoday"],
+      "disableGlobalExcludedProducts": false
+    },
+    "customAttributes": {
+      "enableShowingEmptyThresholdBar": false,
+      "enableShowingFreeShippingLabel": false,
+      "gwp": false,
+      "hideDisclaimerMessage": false,
+      "isCouponOnlyActivatesPromotion": false,
+      "isExcludeTranslate": false,
+      "isForcedShowingExcludedMessage": false,
+      "isShowPrviewOnEmptyCart": false,
+      "showDisclaimerMessage": false
+    }
+  },
+  "assignment": {
+    "promotionId": "vip-2024-free-two-day-shipping",
+    "campaignId": "vip-2024-free-two-day-shipping",
+    "rank": 10,
+    "qualifiers": {
+      "matchMode": "any",
+      "customerGroupIds": [],
+      "sourceCodes": [],
+      "qualifierCouponIds": []
+    },
+    "activationCoupons": ["VIP-2024-Free-Two-Day-Shipping"],
+    "schedule": {
+      "startDate": "2024-07-06T04:00:00.000Z",
+      "endDate": "2024-09-30T07:30:00.000Z"
+    }
+  }
+}

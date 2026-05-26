@@ -1,0 +1,63 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "progressPresentation",
+  "title": "Progress Presentation",
+  "description": "Presentation-safe session progress snapshot for Teams/Copilot progress indicators.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "type", "currentGroup", "completedQuestions", "totalQuestions",
+    "remainingQuestions", "completionPercentage", "status", "groups"
+  ],
+  "properties": {
+    "type": {
+      "type": "string",
+      "const": "progress"
+    },
+    "currentGroup": {
+      "type": ["string", "null"],
+      "description": "Group name of the next unanswered question. Null when all answered."
+    },
+    "completedQuestions": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Number of validly answered questions (excludes invalid)."
+    },
+    "totalQuestions": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Total questions in the session question queue."
+    },
+    "remainingQuestions": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "totalQuestions - completedQuestions."
+    },
+    "completionPercentage": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 100,
+      "description": "Session completion percentage (0–100)."
+    },
+    "status": {
+      "type": "string",
+      "enum": ["CREATED", "IN_PROGRESS", "VALIDATION_FAILED", "REVIEW_PENDING", "COMPLETE", "CANCELLED"],
+      "description": "Current session status."
+    },
+    "groups": {
+      "type": "array",
+      "description": "Per-group progress in GROUP_ORDER. Empty groups omitted.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["group", "total", "answered", "complete"],
+        "properties": {
+          "group":    { "type": "string" },
+          "total":    { "type": "integer", "minimum": 0 },
+          "answered": { "type": "integer", "minimum": 0 },
+          "complete": { "type": "boolean" }
+        }
+      }
+    }
+  }
+}

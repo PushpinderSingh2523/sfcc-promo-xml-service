@@ -1,0 +1,11 @@
+{
+  "_description": "Birthday VIP product promotion — one-time use, $50 off on orders over $50",
+  "intent": "Birthday promotion: $50 off orders over $50 for VIP members, one-time use only, not valid on gift cards",
+  "expectedRuleType": "product",
+  "expectedDiscountKind": "amount",
+  "expectedDiscountValue": 50,
+  "expectedExclusivity": "class",
+  "expectedExcludedCategories": ["gift-cards"],
+  "expectedCustomerGroups": ["VIP"],
+  "expectedPreventRequalifying": true
+}

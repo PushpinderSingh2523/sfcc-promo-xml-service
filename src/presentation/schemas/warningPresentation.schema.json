@@ -1,0 +1,75 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "warningPresentation",
+  "title": "Replay Warning Presentation",
+  "description": "Presentation-safe replay safety warning container for Teams/Copilot acknowledgement flows.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["type", "warnings", "totalWarnings", "acknowledgementRequired"],
+  "properties": {
+    "type": {
+      "type": "string",
+      "const": "warning"
+    },
+    "warnings": {
+      "type": "array",
+      "description": "Individual replay safety warnings. Order preserved from orchestrator.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "severity", "fieldId", "key", "slotContext",
+          "message", "priorValue", "newValue", "acknowledgementRequired"
+        ],
+        "properties": {
+          "severity": {
+            "type": "string",
+            "const": "HIGH",
+            "description": "All replay warnings have HIGH severity."
+          },
+          "fieldId": {
+            "type": "string",
+            "description": "Registry field ID of the changed field."
+          },
+          "key": {
+            "type": "string",
+            "description": "Stable answer key."
+          },
+          "slotContext": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["slotType", "slotIndex"],
+            "properties": {
+              "slotType":  { "type": ["string", "null"] },
+              "slotIndex": { "type": ["integer", "null"] }
+            }
+          },
+          "message": {
+            "type": "string",
+            "description": "Human-readable warning message from orchestrator. Verbatim — never rewritten."
+          },
+          "priorValue": {
+            "description": "Prior-season value. Null when not set."
+          },
+          "newValue": {
+            "description": "New answered value."
+          },
+          "acknowledgementRequired": {
+            "type": "boolean",
+            "const": true,
+            "description": "Always true — all replay warnings require acknowledgement."
+          }
+        }
+      }
+    },
+    "totalWarnings": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Total number of warnings in this container."
+    },
+    "acknowledgementRequired": {
+      "type": "boolean",
+      "description": "True when totalWarnings > 0. False when no warnings exist."
+    }
+  }
+}

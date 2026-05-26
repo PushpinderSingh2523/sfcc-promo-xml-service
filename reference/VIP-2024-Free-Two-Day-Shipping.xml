@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<promotions xmlns="http://www.demandware.com/xml/impex/promotion/2008-01-31">
+    <campaign campaign-id="2024-Free-Two-Day-Shipping">
+        <enabled-flag>true</enabled-flag>
+        <campaign-scope>
+            <applicable-online/>
+        </campaign-scope>
+    </campaign>
+
+    <global-promotion-settings>
+        <global-excluded-products>
+            <included-products>
+                <condition-group>
+                    <category-condition catalog-id="siteCatalog_ToryUS" operator="is equal">
+                        <category-id>Exclusions-Always</category-id>
+                    </category-condition>
+                </condition-group>
+                <condition-group>
+                    <category-condition catalog-id="siteCatalog_ToryUS" operator="is equal">
+                        <category-id>accessories-seedbox-foundation</category-id>
+                    </category-condition>
+                </condition-group>
+                <condition-group>
+                    <category-condition catalog-id="siteCatalog_ToryUS" operator="is equal">
+                        <category-id>accessories-masks</category-id>
+                    </category-condition>
+                </condition-group>
+            </included-products>
+        </global-excluded-products>
+        <global-excluded-product-options>
+            <product-option-id>monogramming</product-option-id>
+        </global-excluded-product-options>
+    </global-promotion-settings>
+
+    <promotion promotion-id="VIP-2024-Free-Two-Day-Shipping">
+        <enabled-flag>true</enabled-flag>
+        <archived-flag>false</archived-flag>
+        <searchable-flag>false</searchable-flag>
+        <refinable-flag>false</refinable-flag>
+        <prevent-requalifying-flag>false</prevent-requalifying-flag>
+        <prorate-across-eligible-items-flag>false</prorate-across-eligible-items-flag>
+        <exclusivity>no</exclusivity>
+        <name xml:lang="x-default">Free 2 Day Shipping</name>
+        <callout-msg xml:lang="x-default">Free 2 Day Shipping</callout-msg>
+        <custom-attributes>
+            <custom-attribute attribute-id="enableShowingEmptyThresholdBar">false</custom-attribute>
+            <custom-attribute attribute-id="enableShowingFreeShippingLabel">false</custom-attribute>
+            <custom-attribute attribute-id="gwp">false</custom-attribute>
+            <custom-attribute attribute-id="hideDisclaimerMessage">false</custom-attribute>
+            <custom-attribute attribute-id="isCouponOnlyActivatesPromotion">false</custom-attribute>
+            <custom-attribute attribute-id="isExcludeTranslate">false</custom-attribute>
+            <custom-attribute attribute-id="isForcedShowingExcludedMessage">false</custom-attribute>
+            <custom-attribute attribute-id="isShowPrviewOnEmptyCart">false</custom-attribute>
+            <custom-attribute attribute-id="showDisclaimerMessage">false</custom-attribute>
+        </custom-attributes>
+        <shipping-promotion-rule>
+            <qualifying-products>
+                <included-products>
+                    <condition-group>
+                        <price-condition operator="greater than">
+                            <price>0.01</price>
+                        </price-condition>
+                    </condition-group>
+                </included-products>
+            </qualifying-products>
+            <shipping-methods>
+                <method-id>twoday</method-id>
+            </shipping-methods>
+            <discounts condition-type="shipment-total">
+                <discount>
+                    <threshold>0.01</threshold>
+                    <free/>
+                </discount>
+            </discounts>
+        </shipping-promotion-rule>
+    </promotion>
+
+    <promotion-campaign-assignment promotion-id="VIP-2024-Free-Two-Day-Shipping" campaign-id="2024-Free-Two-Day-Shipping">
+        <qualifiers match-mode="any">
+            <customer-groups/>
+            <source-codes/>
+            <coupons/>
+        </qualifiers>
+        <coupons>
+            <coupon coupon-id="VIP-2024-Free-Two-Day-Shipping"/>
+        </coupons>
+        <rank>10</rank>
+        <schedule>
+            <start-date>2024-07-06T04:00:00.000Z</start-date>
+            <end-date>2024-09-30T07:30:00.000Z</end-date>
+        </schedule>
+    </promotion-campaign-assignment>
+
+</promotions>

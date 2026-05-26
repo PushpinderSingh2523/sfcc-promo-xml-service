@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<promotions xmlns="http://www.demandware.com/xml/impex/promotion/2008-01-31">
+    <global-promotion-settings>
+        <global-excluded-products>
+            <included-products>
+                <condition-group>
+                    <category-condition catalog-id="siteCatalog_ToryUS" operator="is equal">
+                        <category-id>Exclusions-Always</category-id>
+                    </category-condition>
+                </condition-group>
+                <condition-group>
+                    <category-condition catalog-id="siteCatalog_ToryUS" operator="is equal">
+                        <category-id>accessories-seedbox-foundation</category-id>
+                    </category-condition>
+                </condition-group>
+                <condition-group>
+                    <category-condition catalog-id="siteCatalog_ToryUS" operator="is equal">
+                        <category-id>accessories-masks</category-id>
+                    </category-condition>
+                </condition-group>
+            </included-products>
+        </global-excluded-products>
+        <global-excluded-product-options>
+            <product-option-id>monogramming</product-option-id>
+        </global-excluded-product-options>
+    </global-promotion-settings>
+
+    <promotion promotion-id="2018-April-VIP-Email-Promo-Bday">
+        <enabled-flag>true</enabled-flag>
+        <archived-flag>true</archived-flag>
+        <searchable-flag>false</searchable-flag>
+        <refinable-flag>false</refinable-flag>
+        <prevent-requalifying-flag>false</prevent-requalifying-flag>
+        <prorate-across-eligible-items-flag>false</prorate-across-eligible-items-flag>
+        <exclusivity>class</exclusivity>
+        <name xml:lang="x-default">Birthday</name>
+        <callout-msg xml:lang="x-default">ONE-TIME-USE-ONLY PROMOTION FOR ONE SHOPPING TRANSACTION AT A TORY BURCH OR TORY SPORT STORE OR OUTLET IN THE U.S. OR CANADA OR AT TORYBURCH.COM OR TORYSPORT.COM. TO USE IN STORE, GIVE TO AN ASSOCIATE AT THE TIME OF PURCHASE. TO USE ONLINE, ENTER CODE DURING CHECKOUT (SALES ARE SUBJECT TO TORY BURCH SHIPPING POLICY). CARD IS NONTRANSFERABLE, CANNOT BE REDEEMED FOR CASH OR CREDIT AND CANNOT BE COMBINED WITH ANY OTHER OFFER OR PROMOTION. NOT VALID ON TORY BURCH FOUNDATION PRODUCTS AND GIFT CARDS. NO MORE THAN FIVE UNITS OF ANY ONE STYLE MAY BE PURCHASED AT ONE TIME. NO PRICE ADJUSTMENTS ON PREVIOUS PURCHASES. NOT VALID FOR EMPLOYEES. VALID 04/01/2018-04/30/2018.</callout-msg>
+        <custom-attributes>
+            <custom-attribute attribute-id="gwp">false</custom-attribute>
+            <custom-attribute attribute-id="isExcludeTranslate">false</custom-attribute>
+        </custom-attributes>
+        <product-promotion-rule>
+            <qualifying-products>
+                <included-products>
+                    <condition-group>
+                        <price-condition operator="greater than">
+                            <price>0.01</price>
+                        </price-condition>
+                    </condition-group>
+                </included-products>
+            </qualifying-products>
+            <discounts condition-type="product-amount">
+                <discount>
+                    <threshold>50.0</threshold>
+                    <amount>50.0</amount>
+                </discount>
+            </discounts>
+            <max-applications>1</max-applications>
+        </product-promotion-rule>
+    </promotion>
+
+</promotions>

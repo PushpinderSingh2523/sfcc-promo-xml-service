@@ -1,0 +1,18 @@
+{
+  "watch": ["src"],
+  "ext": "js,json",
+  "ignore": [
+    "runtime/**",
+    "output/**",
+    "docs/**",
+    "coverage/**",
+    "tests/**",
+    ".git/**",
+    "**/*.log",
+    "**/*.log.*"
+  ],
+  "delay": 500,
+  "env": {
+    "NODE_ENV": "development"
+  }
+}

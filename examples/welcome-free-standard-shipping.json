@@ -1,0 +1,37 @@
+{
+  "_comment": "Example: Welcome free standard shipping (standalone, no campaign). Three shipping methods, disables global exclusions, has upsell-threshold.",
+  "_sourceFile": "reference/Welcome-free-standard-shipping.xml",
+  "_schemaVersion": "v2",
+  "globalSettings": {
+    "catalogId": "siteCatalog_ToryUS",
+    "excludedCategoryIds": ["Exclusions-Always", "accessories-seedbox-foundation", "accessories-masks"],
+    "excludedProductOptionIds": ["monogramming"]
+  },
+  "promotion": {
+    "id": "welcome-free-standard-shipping",
+    "name": "Welcome: Free Shipping",
+    "lifecycle": {
+      "enabled": true,
+      "archived": true,
+      "searchable": true,
+      "refinable": false,
+      "preventRequalifying": false,
+      "prorateAcrossEligibleItems": false
+    },
+    "exclusivity": "class",
+    "ruleType": "shipping",
+    "discountConditionType": "shipment-total",
+    "discountTiers": [
+      { "threshold": 1.0, "kind": "free" }
+    ],
+    "shippingRuleOptions": {
+      "methodIds": ["standard-hazmat", "surepost", "standard"],
+      "disableGlobalExcludedProducts": true,
+      "upsellThreshold": 0.0
+    },
+    "customAttributes": {
+      "gwp": false,
+      "isExcludeTranslate": false
+    }
+  }
+}

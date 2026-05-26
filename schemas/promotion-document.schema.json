@@ -1,0 +1,238 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "promotionDocument",
+  "title": "SFCC PromotionDocumentV2 — AJV Runtime Schema",
+  "description": "Runtime validation schema used before XML generation. Slightly more permissive than the design schema: customAttributes is optional (parser defaults to empty), fixed-price added to discount kinds, orderRuleOptions not required for all order promos.",
+  "type": "object",
+  "required": ["globalSettings", "promotion"],
+  "additionalProperties": false,
+
+  "properties": {
+
+    "_comment":     { "type": "string" },
+    "_sourceFile":  { "type": "string" },
+    "_schemaVersion": { "type": "string" },
+
+    "globalSettings": {
+      "type": "object",
+      "required": ["catalogId", "excludedCategoryIds", "excludedProductOptionIds"],
+      "additionalProperties": false,
+      "properties": {
+        "catalogId":                 { "type": "string", "minLength": 1 },
+        "excludedCategoryIds":       { "type": "array",  "items": { "type": "string", "minLength": 1 } },
+        "excludedProductOptionIds":  { "type": "array",  "items": { "type": "string", "minLength": 1 } }
+      }
+    },
+
+    "campaign": {
+      "type": "object",
+      "required": ["id", "enabled", "scope"],
+      "additionalProperties": false,
+      "properties": {
+        "id":       { "type": "string",  "minLength": 1, "maxLength": 100 },
+        "enabled":  { "type": "boolean" },
+        "scope":    { "type": "string",  "enum": ["online", "offline", "both"] },
+        "startDate": { "type": "string", "format": "date-time" },
+        "endDate":   { "type": "string", "format": "date-time" },
+        "customerGroups": {
+          "type": "object",
+          "required": ["matchMode", "groupIds"],
+          "additionalProperties": false,
+          "properties": {
+            "matchMode": { "type": "string", "enum": ["any", "all"] },
+            "groupIds":  { "type": "array",  "items": { "type": "string", "minLength": 1 } }
+          }
+        }
+      }
+    },
+
+    "promotion": {
+      "type": "object",
+      "required": ["id", "name", "lifecycle", "exclusivity", "ruleType", "discountConditionType", "discounts"],
+      "additionalProperties": false,
+      "properties": {
+        "id":          { "type": "string", "minLength": 1, "maxLength": 100 },
+        "name":        { "type": "string", "minLength": 1, "maxLength": 200 },
+        "calloutMsg":  { "type": "string", "maxLength": 2000 },
+
+        "lifecycle": {
+          "type": "object",
+          "required": ["enabled", "archived", "searchable", "refinable", "preventRequalifying", "prorateAcrossEligibleItems"],
+          "additionalProperties": false,
+          "properties": {
+            "enabled":                    { "type": "boolean" },
+            "archived":                   { "type": "boolean" },
+            "searchable":                 { "type": "boolean" },
+            "refinable":                  { "type": "boolean" },
+            "preventRequalifying":        { "type": "boolean" },
+            "prorateAcrossEligibleItems": { "type": "boolean" }
+          }
+        },
+
+        "exclusivity": { "type": "string", "enum": ["no", "class", "global"] },
+
+        "ruleType": { "type": "string", "enum": ["product", "order", "shipping"] },
+
+        "discountConditionType": {
+          "type": "string",
+          "enum": ["product-amount", "order-total", "shipment-total"]
+        },
+
+        "discounts": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": ["threshold", "discountType"],
+            "additionalProperties": false,
+            "properties": {
+              "threshold":     { "type": "number", "minimum": 0 },
+              "discountType":  { "type": "string", "enum": ["percentage", "amount", "free-shipping", "fixed-price"] },
+              "discountValue": { "type": "number", "minimum": 0 }
+            }
+          }
+        },
+
+        "qualifyingProducts":        { "$ref": "#/definitions/ProductCondition" },
+        "excludedProducts":          { "$ref": "#/definitions/ProductCondition" },
+
+        "customAttributes": {
+          "type": "object",
+          "additionalProperties": { "oneOf": [{ "type": "boolean" }, { "type": "string" }, { "type": "number" }] }
+        },
+
+        "productRuleOptions": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "maxApplications": { "type": "integer", "minimum": 1 }
+          }
+        },
+
+        "orderRuleOptions": {
+          "type": "object",
+          "required": ["discountOnlyQualifyingProducts", "excludeDiscountedProducts"],
+          "additionalProperties": false,
+          "properties": {
+            "discountOnlyQualifyingProducts": { "type": "boolean" },
+            "excludeDiscountedProducts":      { "type": "boolean" }
+          }
+        },
+
+        "shippingRuleOptions": {
+          "type": "object",
+          "required": ["methodIds"],
+          "additionalProperties": false,
+          "properties": {
+            "methodIds": {
+              "type": "array",
+              "minItems": 1,
+              "items": { "type": "string", "minLength": 1 }
+            },
+            "disableGlobalExcludedProducts": { "type": "boolean" },
+            "upsellThreshold":               { "type": "number", "minimum": 0 }
+          }
+        }
+      }
+    },
+
+    "assignment": {
+      "type": "object",
+      "required": ["promotionId", "campaignId", "qualifiers", "activationCoupons"],
+      "additionalProperties": false,
+      "properties": {
+        "promotionId": { "type": "string", "minLength": 1 },
+        "campaignId":  { "type": "string", "minLength": 1 },
+        "rank":        { "type": "integer", "minimum": 1 },
+
+        "qualifiers": {
+          "type": "object",
+          "required": ["matchMode"],
+          "additionalProperties": false,
+          "properties": {
+            "matchMode":          { "type": "string", "enum": ["any", "all"] },
+            "customerGroupIds":   { "type": "array", "items": { "type": "string" } },
+            "sourceCodes":        { "type": "array", "items": { "type": "string" } },
+            "qualifierCouponIds": { "type": "array", "items": { "type": "string" } }
+          }
+        },
+
+        "activationCoupons": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 }
+        },
+
+        "schedule": {
+          "type": "object",
+          "required": ["startDate", "endDate"],
+          "additionalProperties": false,
+          "properties": {
+            "startDate": { "type": "string", "format": "date-time" },
+            "endDate":   { "type": "string", "format": "date-time" }
+          }
+        }
+      }
+    },
+
+    "parserMeta": {
+      "type": "object",
+      "additionalProperties": true,
+      "description": "Parser trace metadata — not written to XML, used for logging and debugging."
+    }
+
+  },
+
+  "definitions": {
+
+    "ProductCondition": {
+      "type": "object",
+      "required": ["conditionGroups"],
+      "additionalProperties": false,
+      "properties": {
+        "conditionGroups": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/definitions/ConditionGroup" }
+        }
+      }
+    },
+
+    "ConditionGroup": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "priceCondition": {
+          "type": "object",
+          "required": ["operator", "price"],
+          "additionalProperties": false,
+          "properties": {
+            "operator": {
+              "type": "string",
+              "enum": ["greater than", "less than", "is equal", "greater than or equal", "less than or equal"]
+            },
+            "price": { "type": "number", "minimum": 0 }
+          }
+        },
+        "categoryCondition": {
+          "type": "object",
+          "required": ["catalogId", "operator", "categoryIds"],
+          "additionalProperties": false,
+          "properties": {
+            "catalogId":   { "type": "string", "minLength": 1 },
+            "operator":    { "type": "string", "enum": ["is equal", "is not equal"] },
+            "categoryIds": { "type": "array", "minItems": 1, "items": { "type": "string", "minLength": 1 } }
+          }
+        },
+        "productIdCondition": {
+          "type": "object",
+          "required": ["productIds"],
+          "additionalProperties": false,
+          "properties": {
+            "productIds": { "type": "array", "minItems": 1, "items": { "type": "string", "minLength": 1 } }
+          }
+        }
+      }
+    }
+
+  }
+}

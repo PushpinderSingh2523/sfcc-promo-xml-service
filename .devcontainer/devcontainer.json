@@ -1,0 +1,64 @@
+{
+  "name": "SFCC Promo XML Service",
+
+  // ── Build from the project Dockerfile ───────────────────────────────────────
+  // Using the existing Dockerfile ensures the container matches CI exactly.
+  "build": {
+    "context": "..",
+    "dockerfile": "../Dockerfile",
+    "target": "development"
+  },
+
+  // ── Alternative: use a pre-built Microsoft Node image (faster cold start)
+  // Uncomment and comment out "build" above to use instead:
+  // "image": "mcr.microsoft.com/devcontainers/javascript-node:1-20-bullseye",
+
+  // ── Port forwarding ──────────────────────────────────────────────────────────
+  "forwardPorts": [3000],
+  "portsAttributes": {
+    "3000": {
+      "label": "SFCC API",
+      "onAutoForward": "notify"
+    }
+  },
+
+  // ── VS Code extensions installed in container ────────────────────────────────
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "esbenp.prettier-vscode",
+        "dbaeumer.vscode-eslint",
+        "orta.vscode-jest",
+        "eamodio.gitlens",
+        "humao.rest-client",
+        "42crunch.vscode-openapi",
+        "redhat.vscode-xml",
+        "wayou.vscode-todo-highlight"
+      ],
+      "settings": {
+        "terminal.integrated.defaultProfile.linux": "bash",
+        "editor.formatOnSave": true,
+        "files.eol": "\n"
+      }
+    }
+  },
+
+  // ── Lifecycle commands ───────────────────────────────────────────────────────
+  "postCreateCommand": "npm install && mkdir -p runtime/sessions runtime/exports runtime/imports runtime/traces runtime/logs logs/runtime",
+  "postStartCommand": "echo '✅ SFCC container ready. Run: npm run dev'",
+
+  // ── Mount .env from host if it exists ────────────────────────────────────────
+  // The .env file is never committed. Mount it from the host.
+  "mounts": [
+    "source=${localWorkspaceFolder}/.env,target=/workspace/.env,type=bind,consistency=cached"
+  ],
+
+  // ── Container user ───────────────────────────────────────────────────────────
+  "remoteUser": "node",
+
+  // ── Features: add extra tools inside the container ───────────────────────────
+  "features": {
+    "ghcr.io/devcontainers/features/git:1": {},
+    "ghcr.io/devcontainers/features/github-cli:1": {}
+  }
+}

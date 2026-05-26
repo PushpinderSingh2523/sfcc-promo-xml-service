@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<promotions xmlns="http://www.demandware.com/xml/impex/promotion/2008-01-31">
+    <global-promotion-settings>
+        <global-excluded-products>
+            <included-products>
+                <condition-group>
+                    <category-condition catalog-id="siteCatalog_ToryUS" operator="is equal">
+                        <category-id>Exclusions-Always</category-id>
+                    </category-condition>
+                </condition-group>
+                <condition-group>
+                    <category-condition catalog-id="siteCatalog_ToryUS" operator="is equal">
+                        <category-id>accessories-seedbox-foundation</category-id>
+                    </category-condition>
+                </condition-group>
+                <condition-group>
+                    <category-condition catalog-id="siteCatalog_ToryUS" operator="is equal">
+                        <category-id>accessories-masks</category-id>
+                    </category-condition>
+                </condition-group>
+            </included-products>
+        </global-excluded-products>
+        <global-excluded-product-options>
+            <product-option-id>monogramming</product-option-id>
+        </global-excluded-product-options>
+    </global-promotion-settings>
+
+    <promotion promotion-id="Welcome-free-standard-shipping">
+        <enabled-flag>true</enabled-flag>
+        <archived-flag>true</archived-flag>
+        <searchable-flag>true</searchable-flag>
+        <refinable-flag>false</refinable-flag>
+        <prevent-requalifying-flag>false</prevent-requalifying-flag>
+        <prorate-across-eligible-items-flag>false</prorate-across-eligible-items-flag>
+        <exclusivity>class</exclusivity>
+        <name xml:lang="x-default">Welcome: Free Shipping</name>
+        <custom-attributes>
+            <custom-attribute attribute-id="gwp">false</custom-attribute>
+            <custom-attribute attribute-id="isExcludeTranslate">false</custom-attribute>
+        </custom-attributes>
+        <shipping-promotion-rule>
+            <shipping-methods>
+                <method-id>standard-hazmat</method-id>
+                <method-id>surepost</method-id>
+                <method-id>standard</method-id>
+            </shipping-methods>
+            <disable-global-excluded-products>true</disable-global-excluded-products>
+            <discounts condition-type="shipment-total">
+                <discount>
+                    <threshold>1.0</threshold>
+                    <free/>
+                </discount>
+            </discounts>
+            <upsell-threshold>0.0</upsell-threshold>
+        </shipping-promotion-rule>
+    </promotion>
+
+</promotions>

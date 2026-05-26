@@ -1,0 +1,30 @@
+{
+  "_comment": "Cross-platform Claude Code project permissions. Absolute paths removed — use relative paths or env vars instead. Machine-specific paths go in ~/.claude/projects/<key>/settings.json (not committed).",
+  "permissions": {
+    "allow": [
+      "Bash(npm *)",
+      "Bash(npx jest *)",
+      "Bash(npx *)",
+      "Bash(node *)",
+      "Bash(NODE_ENV=development node src/app.js)",
+      "Bash(git *)",
+      "Bash(curl -s * http://localhost:3000/*)",
+      "Bash(curl -s -w * http://localhost:3000/*)",
+      "Bash(python3 -m json.tool)",
+      "Bash(pkill -f \"nodemon src/app.js\")",
+      "Bash(pkill -f \"node src/app.js\")",
+      "Bash(pkill -f \"nodemon src/app.js\" 2>/dev/null; pkill -f \"node src/app.js\" 2>/dev/null; sleep 1 *)",
+      "Bash(sleep *)",
+      "Bash(tee /tmp/sfcc-response.json)",
+      "Bash(cat /tmp/sfcc-dev.log)",
+      "Bash(cat /tmp/sfcc-response.json)",
+      "Bash(echo *)",
+      "Bash(xargs kill *)",
+      "Bash(mkdir -p *)",
+      "Bash(ls *)",
+      "Bash(find . *)",
+      "Bash(grep *)",
+      "Bash(wc *)"
+    ]
+  }
+}

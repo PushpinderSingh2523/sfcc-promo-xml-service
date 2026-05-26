@@ -1,0 +1,314 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<promotions xmlns="http://www.demandware.com/xml/impex/promotion/2008-01-31">
+    <campaign campaign-id="2025_SUMMER_SAS">
+        <enabled-flag>true</enabled-flag>
+        <campaign-scope>
+            <applicable-online/>
+        </campaign-scope>
+    </campaign>
+
+    <global-promotion-settings>
+        <global-excluded-products>
+            <included-products>
+                <condition-group>
+                    <category-condition catalog-id="siteCatalog_ToryUS" operator="is equal">
+                        <category-id>Exclusions-Always</category-id>
+                    </category-condition>
+                </condition-group>
+                <condition-group>
+                    <category-condition catalog-id="siteCatalog_ToryUS" operator="is equal">
+                        <category-id>accessories-seedbox-foundation</category-id>
+                    </category-condition>
+                </condition-group>
+                <condition-group>
+                    <category-condition catalog-id="siteCatalog_ToryUS" operator="is equal">
+                        <category-id>accessories-masks</category-id>
+                    </category-condition>
+                </condition-group>
+            </included-products>
+        </global-excluded-products>
+        <global-excluded-product-options>
+            <product-option-id>monogramming</product-option-id>
+        </global-excluded-product-options>
+    </global-promotion-settings>
+
+    <promotion promotion-id="2025-SUMMER-SAS-APPEASEMENT">
+        <enabled-flag>true</enabled-flag>
+        <archived-flag>false</archived-flag>
+        <searchable-flag>false</searchable-flag>
+        <refinable-flag>false</refinable-flag>
+        <prevent-requalifying-flag>false</prevent-requalifying-flag>
+        <prorate-across-eligible-items-flag>false</prorate-across-eligible-items-flag>
+        <exclusivity>class</exclusivity>
+        <name xml:lang="x-default">Promo Applied</name>
+        <name xml:lang="en">Promo Applied</name>
+        <custom-attributes>
+            <custom-attribute attribute-id="couponErrorMsgNoActivePromotion" xml:lang="x-default">This promo code has expired</custom-attribute>
+            <custom-attribute attribute-id="couponErrorMsgRedemptionLimitExeeded" xml:lang="x-default">This promo code has already been used</custom-attribute>
+            <custom-attribute attribute-id="enableShowingEmptyThresholdBar">false</custom-attribute>
+            <custom-attribute attribute-id="enableShowingFreeShippingLabel">false</custom-attribute>
+            <custom-attribute attribute-id="gwp">false</custom-attribute>
+            <custom-attribute attribute-id="isCouponOnlyActivatesPromotion">true</custom-attribute>
+            <custom-attribute attribute-id="isExcludeTranslate">false</custom-attribute>
+            <custom-attribute attribute-id="isForcedShowingExcludedMessage">false</custom-attribute>
+            <custom-attribute attribute-id="isShowPrviewOnEmptyCart">false</custom-attribute>
+            <custom-attribute attribute-id="klaviyoIncludePromoFeed">false</custom-attribute>
+            <custom-attribute attribute-id="shouldHidePromoCalculator">false</custom-attribute>
+            <custom-attribute attribute-id="showDisclaimerMessage">false</custom-attribute>
+            <custom-attribute attribute-id="storefront_msg_cart_exclusion" xml:lang="x-default">Excluded From Promotion</custom-attribute>
+            <custom-attribute attribute-id="storefront_msg_cart_inclusion" xml:lang="x-default">25% Off Discount Applied</custom-attribute>
+        </custom-attributes>
+        <product-promotion-rule>
+            <discounted-products>
+                <included-products>
+                    <condition-group>
+                        <category-condition catalog-id="siteCatalog_ToryUS" operator="is equal">
+                            <category-id>sale-view-all</category-id>
+                        </category-condition>
+                    </condition-group>
+                </included-products>
+                <excluded-products>
+                    <condition-group>
+                        <category-condition catalog-id="siteCatalog_ToryUS" operator="is equal">
+                            <category-id>Exclusions-Always</category-id>
+                            <category-id>accessories-seedbox-foundation</category-id>
+                            <category-id>Exclusions-Welcome-Offer</category-id>
+                        </category-condition>
+                    </condition-group>
+                </excluded-products>
+            </discounted-products>
+            <simple-discount>
+                <percentage>25.0</percentage>
+            </simple-discount>
+        </product-promotion-rule>
+    </promotion>
+
+    <promotion promotion-id="2025_SUMMER_SAS">
+        <enabled-flag>false</enabled-flag>
+        <archived-flag>false</archived-flag>
+        <searchable-flag>false</searchable-flag>
+        <refinable-flag>false</refinable-flag>
+        <prevent-requalifying-flag>false</prevent-requalifying-flag>
+        <prorate-across-eligible-items-flag>false</prorate-across-eligible-items-flag>
+        <exclusivity>class</exclusivity>
+        <name xml:lang="x-default">Promo Applied</name>
+        <name xml:lang="en">Promo Applied</name>
+        <custom-attributes>
+            <custom-attribute attribute-id="enableShowingEmptyThresholdBar">false</custom-attribute>
+            <custom-attribute attribute-id="enableShowingFreeShippingLabel">false</custom-attribute>
+            <custom-attribute attribute-id="gwp">false</custom-attribute>
+            <custom-attribute attribute-id="includedBadge" xml:lang="x-default">{price} after extra 25% off</custom-attribute>
+            <custom-attribute attribute-id="includedBadgeSPP" xml:lang="x-default">{price} after extra 25% off</custom-attribute>
+            <custom-attribute attribute-id="isCouponOnlyActivatesPromotion">true</custom-attribute>
+            <custom-attribute attribute-id="isExcludeTranslate">false</custom-attribute>
+            <custom-attribute attribute-id="isForcedShowingExcludedMessage">true</custom-attribute>
+            <custom-attribute attribute-id="isShowPrviewOnEmptyCart">false</custom-attribute>
+            <custom-attribute attribute-id="klaviyoIncludePromoFeed">false</custom-attribute>
+            <custom-attribute attribute-id="shouldHidePromoCalculator">false</custom-attribute>
+            <custom-attribute attribute-id="showDisclaimerMessage">false</custom-attribute>
+            <custom-attribute attribute-id="storefront_msg_cart_exclusion" xml:lang="x-default">Excluded from Semi-Annual Sale</custom-attribute>
+            <custom-attribute attribute-id="storefront_msg_cart_inclusion" xml:lang="x-default">Extra 25% Off Discount Applied</custom-attribute>
+        </custom-attributes>
+        <product-promotion-rule>
+            <discounted-products>
+                <included-products>
+                    <condition-group>
+                        <category-condition catalog-id="siteCatalog_ToryUS" operator="is equal">
+                            <category-id>sale-view-all</category-id>
+                        </category-condition>
+                    </condition-group>
+                </included-products>
+                <excluded-products>
+                    <condition-group>
+                        <category-condition catalog-id="siteCatalog_ToryUS" operator="is equal">
+                            <category-id>Exclusions-Always</category-id>
+                        </category-condition>
+                    </condition-group>
+                </excluded-products>
+            </discounted-products>
+            <simple-discount>
+                <percentage>25.0</percentage>
+            </simple-discount>
+        </product-promotion-rule>
+    </promotion>
+
+    <promotion promotion-id="2025_Summer_SAS_BB50OFF">
+        <enabled-flag>true</enabled-flag>
+        <archived-flag>false</archived-flag>
+        <searchable-flag>false</searchable-flag>
+        <refinable-flag>false</refinable-flag>
+        <prevent-requalifying-flag>false</prevent-requalifying-flag>
+        <prorate-across-eligible-items-flag>false</prorate-across-eligible-items-flag>
+        <exclusivity>class</exclusivity>
+        <name xml:lang="x-default">$50 off $250</name>
+        <custom-attributes>
+            <custom-attribute attribute-id="couponErrorMsgNoApplicablePromotion" xml:lang="x-default">Promotion requires minimum spend of $250 on included products.</custom-attribute>
+            <custom-attribute attribute-id="enableShowingEmptyThresholdBar">false</custom-attribute>
+            <custom-attribute attribute-id="enableShowingFreeShippingLabel">false</custom-attribute>
+            <custom-attribute attribute-id="gwp">false</custom-attribute>
+            <custom-attribute attribute-id="hideDisclaimerMessage">false</custom-attribute>
+            <custom-attribute attribute-id="isCouponOnlyActivatesPromotion">true</custom-attribute>
+            <custom-attribute attribute-id="isExcludeTranslate">false</custom-attribute>
+            <custom-attribute attribute-id="isForcedShowingExcludedMessage">false</custom-attribute>
+            <custom-attribute attribute-id="isShowPrviewOnEmptyCart">false</custom-attribute>
+            <custom-attribute attribute-id="klaviyoIncludePromoFeed">false</custom-attribute>
+            <custom-attribute attribute-id="shouldHidePromoCalculator">false</custom-attribute>
+            <custom-attribute attribute-id="showDisclaimerMessage">false</custom-attribute>
+            <custom-attribute attribute-id="storefront_msg_cart_exclusion" xml:lang="x-default">Excluded From $50 Off $250</custom-attribute>
+            <custom-attribute attribute-id="storefront_msg_cart_inclusion" xml:lang="x-default">You Have Received $50 Off</custom-attribute>
+        </custom-attributes>
+        <product-promotion-rule>
+            <qualifying-products>
+                <included-products>
+                    <condition-group>
+                        <price-condition operator="greater than">
+                            <price>0.01</price>
+                        </price-condition>
+                    </condition-group>
+                </included-products>
+            </qualifying-products>
+            <discounted-products>
+                <included-products>
+                    <condition-group>
+                        <price-condition operator="greater than">
+                            <price>0.01</price>
+                        </price-condition>
+                    </condition-group>
+                </included-products>
+                <excluded-products>
+                    <condition-group>
+                        <category-condition catalog-id="siteCatalog_ToryUS" operator="is equal">
+                            <category-id>Exclusions-Always</category-id>
+                            <category-id>2025-Summer-SAS-Bounceback-Exclusions</category-id>
+                        </category-condition>
+                    </condition-group>
+                </excluded-products>
+            </discounted-products>
+            <disable-global-excluded-products>true</disable-global-excluded-products>
+            <discounts condition-type="product-amount">
+                <discount>
+                    <threshold>250.0</threshold>
+                    <amount>50.0</amount>
+                </discount>
+            </discounts>
+            <max-applications>1</max-applications>
+        </product-promotion-rule>
+    </promotion>
+
+    <promotion promotion-id="2025_Summer_SAS_WebApp">
+        <enabled-flag>true</enabled-flag>
+        <archived-flag>false</archived-flag>
+        <searchable-flag>false</searchable-flag>
+        <refinable-flag>false</refinable-flag>
+        <prevent-requalifying-flag>false</prevent-requalifying-flag>
+        <prorate-across-eligible-items-flag>false</prorate-across-eligible-items-flag>
+        <exclusivity>class</exclusivity>
+        <name xml:lang="x-default">You have received 25% off</name>
+        <custom-attributes>
+            <custom-attribute attribute-id="enableShowingEmptyThresholdBar">false</custom-attribute>
+            <custom-attribute attribute-id="enableShowingFreeShippingLabel">false</custom-attribute>
+            <custom-attribute attribute-id="gwp">false</custom-attribute>
+            <custom-attribute attribute-id="isCouponOnlyActivatesPromotion">true</custom-attribute>
+            <custom-attribute attribute-id="isExcludeTranslate">false</custom-attribute>
+            <custom-attribute attribute-id="isForcedShowingExcludedMessage">false</custom-attribute>
+            <custom-attribute attribute-id="isShowPrviewOnEmptyCart">false</custom-attribute>
+            <custom-attribute attribute-id="klaviyoIncludePromoFeed">false</custom-attribute>
+            <custom-attribute attribute-id="shouldHidePromoCalculator">false</custom-attribute>
+            <custom-attribute attribute-id="showDisclaimerMessage">false</custom-attribute>
+            <custom-attribute attribute-id="storefront_msg_cart_exclusion" xml:lang="x-default">Excluded from Semi-Annual Sale</custom-attribute>
+            <custom-attribute attribute-id="storefront_msg_cart_inclusion" xml:lang="x-default">Extra 25% Discount Applied</custom-attribute>
+            <custom-attribute attribute-id="thresholdPercentage">
+                <value>25</value>
+            </custom-attribute>
+            <custom-attribute attribute-id="thresholdValues">
+                <value>0.01</value>
+            </custom-attribute>
+        </custom-attributes>
+        <product-promotion-rule>
+            <qualifying-products>
+                <included-products>
+                    <condition-group>
+                        <category-condition catalog-id="siteCatalog_ToryUS" operator="is equal">
+                            <category-id>sale-view-all</category-id>
+                        </category-condition>
+                    </condition-group>
+                </included-products>
+                <excluded-products>
+                    <condition-group>
+                        <category-condition catalog-id="siteCatalog_ToryUS" operator="is equal">
+                            <category-id>Exclusions-Always</category-id>
+                        </category-condition>
+                    </condition-group>
+                </excluded-products>
+            </qualifying-products>
+            <discounts condition-type="product-amount">
+                <discount>
+                    <threshold>0.01</threshold>
+                    <percentage>25.0</percentage>
+                </discount>
+            </discounts>
+        </product-promotion-rule>
+    </promotion>
+
+    <promotion-campaign-assignment promotion-id="2025-SUMMER-SAS-APPEASEMENT" campaign-id="2025_SUMMER_SAS">
+        <qualifiers match-mode="any">
+            <customer-groups/>
+            <source-codes/>
+            <coupons/>
+        </qualifiers>
+        <coupons>
+            <coupon coupon-id="2025-Summer-SAS-CS"/>
+        </coupons>
+        <rank>10</rank>
+        <schedule>
+            <end-date>2025-07-08T04:00:00.000Z</end-date>
+        </schedule>
+    </promotion-campaign-assignment>
+
+    <promotion-campaign-assignment promotion-id="2025_SUMMER_SAS" campaign-id="2025_SUMMER_SAS">
+        <qualifiers match-mode="any">
+            <customer-groups/>
+            <source-codes/>
+            <coupons/>
+        </qualifiers>
+        <customer-groups match-mode="any">
+            <customer-group group-id="Everyone-webapp-except-employees"/>
+        </customer-groups>
+        <rank>10</rank>
+        <schedule>
+            <end-date>2025-07-08T07:15:00.000Z</end-date>
+        </schedule>
+    </promotion-campaign-assignment>
+
+    <promotion-campaign-assignment promotion-id="2025_Summer_SAS_BB50OFF" campaign-id="2025_SUMMER_SAS">
+        <qualifiers match-mode="all">
+            <customer-groups/>
+            <source-codes/>
+            <coupons/>
+        </qualifiers>
+        <coupons>
+            <coupon coupon-id="2025_Summer_SAS_BB"/>
+        </coupons>
+        <rank>10</rank>
+        <schedule>
+            <end-date>2025-07-25T04:00:00.000Z</end-date>
+        </schedule>
+    </promotion-campaign-assignment>
+
+    <promotion-campaign-assignment promotion-id="2025_Summer_SAS_WebApp" campaign-id="2025_SUMMER_SAS">
+        <qualifiers match-mode="all">
+            <customer-groups/>
+            <source-codes/>
+            <coupons/>
+        </qualifiers>
+        <customer-groups match-mode="any">
+            <customer-group group-id="Webapp-users"/>
+        </customer-groups>
+        <rank>10</rank>
+        <schedule>
+            <start-date>2025-07-07T04:00:00.000Z</start-date>
+            <end-date>2025-07-29T04:00:00.000Z</end-date>
+        </schedule>
+    </promotion-campaign-assignment>
+
+</promotions>

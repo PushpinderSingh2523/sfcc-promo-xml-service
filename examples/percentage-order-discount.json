@@ -1,0 +1,63 @@
+{
+  "_comment": "Example: Order-level percentage discount with minimum amount. Maps to <order-promotion-rule> with <discounts condition-type='order-total'>.",
+  "_sourceFile": "reference/Partners-40-off.xml (simplified)",
+  "_schemaVersion": "v2",
+  "globalSettings": {
+    "catalogId": "siteCatalog_ToryUS",
+    "excludedCategoryIds": ["Exclusions-Always", "accessories-seedbox-foundation", "accessories-masks"],
+    "excludedProductOptionIds": ["monogramming"]
+  },
+  "campaign": {
+    "id": "partners-40-off",
+    "enabled": true,
+    "scope": "online"
+  },
+  "promotion": {
+    "id": "partners-40-off",
+    "name": "Partners 40% Off",
+    "lifecycle": {
+      "enabled": true,
+      "archived": false,
+      "searchable": true,
+      "refinable": false,
+      "preventRequalifying": false,
+      "prorateAcrossEligibleItems": false
+    },
+    "exclusivity": "class",
+    "ruleType": "order",
+    "discountConditionType": "order-total",
+    "discountTiers": [
+      { "threshold": 0.01, "kind": "percentage", "value": 40.0 }
+    ],
+    "promotionExcludedProducts": {
+      "conditionGroups": [
+        {
+          "categoryCondition": {
+            "catalogId": "siteCatalog_ToryUS",
+            "operator": "is equal",
+            "categoryIds": ["Exclusions-privatesale", "Exclusions-Always", "Exclusions-Minnie", "Exclusions-pre-order", "Exclusions-millers"]
+          }
+        }
+      ]
+    },
+    "orderRuleOptions": {
+      "discountOnlyQualifyingProducts": false,
+      "excludeDiscountedProducts": false
+    },
+    "customAttributes": {
+      "gwp": false
+    }
+  },
+  "assignment": {
+    "promotionId": "partners-40-off",
+    "campaignId": "partners-40-off",
+    "rank": 10,
+    "qualifiers": {
+      "matchMode": "any",
+      "customerGroupIds": [],
+      "sourceCodes": [],
+      "qualifierCouponIds": []
+    },
+    "activationCoupons": ["Employee-40-off"]
+  }
+}

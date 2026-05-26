@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  SFCC Promotion XML Schema Definition
+  Based on Salesforce Commerce Cloud impex schema: promotion/2008-01-31
+  Used for structural validation of generated XML output.
+-->
+<xs:schema
+  xmlns:xs="http://www.w3.org/2001/XMLSchema"
+  xmlns="http://www.demandware.com/xml/impex/promotion/2008-01-31"
+  targetNamespace="http://www.demandware.com/xml/impex/promotion/2008-01-31"
+  elementFormDefault="qualified">
+
+  <xs:element name="promotions">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="promotion" type="PromotionType" maxOccurs="unbounded"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:complexType name="PromotionType">
+    <xs:sequence>
+      <xs:element name="name" type="xs:string"/>
+      <xs:element name="description" type="xs:string" minOccurs="0"/>
+      <xs:element name="discount" type="DiscountType"/>
+      <xs:element name="eligibility" type="EligibilityType" minOccurs="0"/>
+      <xs:element name="qualifying-products" type="ProductListType" minOccurs="0"/>
+      <xs:element name="discounted-products" type="ProductListType" minOccurs="0"/>
+      <xs:element name="start-date" type="xs:dateTime"/>
+      <xs:element name="end-date" type="xs:dateTime"/>
+    </xs:sequence>
+    <xs:attribute name="campaign-id" type="xs:string" use="required"/>
+    <xs:attribute name="id" type="xs:string" use="required"/>
+    <xs:attribute name="enabled" type="xs:string" use="required"/>
+    <xs:attribute name="exclusivity" type="ExclusivityType" use="required"/>
+  </xs:complexType>
+
+  <xs:simpleType name="ExclusivityType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="no"/>
+      <xs:enumeration value="class"/>
+      <xs:enumeration value="global"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:complexType name="DiscountType">
+    <xs:choice>
+      <xs:element name="order-discount" type="OrderDiscountType"/>
+      <xs:element name="product-discount" type="ProductDiscountType"/>
+      <xs:element name="shipping-discount" type="ShippingDiscountType"/>
+    </xs:choice>
+  </xs:complexType>
+
+  <xs:complexType name="OrderDiscountType">
+    <xs:sequence>
+      <xs:element name="discount">
+        <xs:complexType>
+          <xs:choice>
+            <xs:element name="percentage" type="xs:decimal"/>
+            <xs:element name="amount" type="xs:decimal"/>
+          </xs:choice>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="ProductDiscountType">
+    <xs:sequence>
+      <xs:element name="discount">
+        <xs:complexType>
+          <xs:choice>
+            <xs:element name="fixed-price" type="xs:decimal"/>
+            <xs:element name="percentage" type="xs:decimal"/>
+            <xs:element name="bonus-choice-count" type="xs:integer"/>
+          </xs:choice>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="ShippingDiscountType">
+    <xs:sequence>
+      <xs:element name="discount">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="fixed-price" type="xs:decimal"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="EligibilityType">
+    <xs:choice>
+      <xs:element name="order-condition" type="OrderConditionType"/>
+      <xs:element name="coupon-condition" type="CouponConditionType"/>
+    </xs:choice>
+  </xs:complexType>
+
+  <xs:complexType name="OrderConditionType">
+    <xs:sequence>
+      <xs:element name="subtotal-condition" minOccurs="0">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="subtotal">
+              <xs:complexType>
+                <xs:simpleContent>
+                  <xs:extension base="xs:decimal">
+                    <xs:attribute name="operator" type="xs:string"/>
+                  </xs:extension>
+                </xs:simpleContent>
+              </xs:complexType>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="quantity-condition" minOccurs="0">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="quantity">
+              <xs:complexType>
+                <xs:simpleContent>
+                  <xs:extension base="xs:integer">
+                    <xs:attribute name="operator" type="xs:string"/>
+                  </xs:extension>
+                </xs:simpleContent>
+              </xs:complexType>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="CouponConditionType">
+    <xs:sequence>
+      <xs:element name="coupon-code" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="ProductListType">
+    <xs:sequence>
+      <xs:element name="product-id" type="xs:string" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+</xs:schema>

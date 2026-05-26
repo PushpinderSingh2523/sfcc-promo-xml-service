@@ -1,0 +1,453 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "sasBlueprint.schema.json",
+  "title": "SAS Blueprint",
+  "description": "Canonical blueprint record extracted from a real SFCC SAS promotion XML export. Separates frozen XML structure from editable per-season field values.",
+  "type": "object",
+  "required": ["blueprintId", "sourceExport", "extractedAt", "campaignSlot", "promotionSlots", "assignmentSlots"],
+  "additionalProperties": false,
+
+  "$defs": {
+
+    "categoryCondition": {
+      "description": "A single <category-condition> node. catalogId and operator are frozen; categoryIds are frozen structural data.",
+      "type": "object",
+      "required": ["type", "catalogId", "operator", "categoryIds"],
+      "additionalProperties": false,
+      "properties": {
+        "type":        { "type": "string", "const": "category" },
+        "catalogId":   { "type": "string", "minLength": 1 },
+        "operator":    { "type": "string", "minLength": 1 },
+        "categoryIds": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 },
+          "minItems": 1
+        }
+      }
+    },
+
+    "priceCondition": {
+      "description": "A single <price-condition> node. operator and price are frozen structural gates.",
+      "type": "object",
+      "required": ["type", "operator", "price"],
+      "additionalProperties": false,
+      "properties": {
+        "type":     { "type": "string", "const": "price" },
+        "operator": { "type": "string", "minLength": 1 },
+        "price":    { "type": "number" }
+      }
+    },
+
+    "conditionGroup": {
+      "description": "A single <condition-group> element. Contains exactly one condition node (category or price).",
+      "type": "object",
+      "required": ["condition"],
+      "additionalProperties": false,
+      "properties": {
+        "condition": {
+          "oneOf": [
+            { "$ref": "#/$defs/categoryCondition" },
+            { "$ref": "#/$defs/priceCondition" }
+          ]
+        }
+      }
+    },
+
+    "productConditionBlock": {
+      "description": "Represents <included-products> or <excluded-products>. Contains one or more condition-groups. All structure is frozen.",
+      "type": "object",
+      "required": ["conditionGroups"],
+      "additionalProperties": false,
+      "properties": {
+        "conditionGroups": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/conditionGroup" },
+          "minItems": 1
+        }
+      }
+    },
+
+    "qualifyingProductsBlock": {
+      "description": "Frozen structure of a <qualifying-products> rule element.",
+      "type": "object",
+      "required": ["includedProducts"],
+      "additionalProperties": false,
+      "properties": {
+        "includedProducts": { "$ref": "#/$defs/productConditionBlock" },
+        "excludedProducts": {
+          "description": "Present only when <excluded-products> exists in the source export.",
+          "oneOf": [
+            { "$ref": "#/$defs/productConditionBlock" },
+            { "type": "null" }
+          ]
+        }
+      }
+    },
+
+    "discountedProductsBlock": {
+      "description": "Frozen structure of a <discounted-products> rule element.",
+      "type": "object",
+      "required": ["includedProducts"],
+      "additionalProperties": false,
+      "properties": {
+        "includedProducts": { "$ref": "#/$defs/productConditionBlock" },
+        "excludedProducts": {
+          "description": "Present only when <excluded-products> exists in the source export.",
+          "oneOf": [
+            { "$ref": "#/$defs/productConditionBlock" },
+            { "type": "null" }
+          ]
+        }
+      }
+    },
+
+    "frozenCustomAttribute": {
+      "description": "A custom-attribute whose value is structurally frozen and must not be changed between seasons.",
+      "type": "object",
+      "required": ["attributeId", "valueType"],
+      "additionalProperties": false,
+      "properties": {
+        "attributeId": { "type": "string", "minLength": 1 },
+        "xmlLang":     { "type": ["string", "null"] },
+        "valueType":   { "type": "string", "enum": ["text", "nested"] },
+        "value": {
+          "description": "For valueType=text: the text content. For valueType=nested: stringified inner value.",
+          "type": ["string", "null"]
+        }
+      }
+    },
+
+    "editableCustomAttribute": {
+      "description": "A custom-attribute whose value changes between seasons (user-facing copy or localized message).",
+      "type": "object",
+      "required": ["attributeId", "valueType", "value"],
+      "additionalProperties": false,
+      "properties": {
+        "attributeId": { "type": "string", "minLength": 1 },
+        "xmlLang":     { "type": ["string", "null"] },
+        "valueType":   { "type": "string", "enum": ["text", "nested"] },
+        "value": {
+          "description": "For valueType=text: the editable text string. For valueType=nested: the editable inner value string.",
+          "type": "string"
+        }
+      }
+    },
+
+    "nameEntry": {
+      "description": "A single <name xml:lang='...'> element. xmlLang is frozen; value is editable.",
+      "type": "object",
+      "required": ["xmlLang", "value"],
+      "additionalProperties": false,
+      "properties": {
+        "xmlLang": { "type": "string", "minLength": 1 },
+        "value":   { "type": "string", "minLength": 1 }
+      }
+    },
+
+    "discountEntryTemplate": {
+      "description": "Frozen structure metadata for one <discount> entry in a product-amount discounts block. discountType is frozen; the corresponding threshold and value are editable.",
+      "type": "object",
+      "required": ["discountType"],
+      "additionalProperties": false,
+      "properties": {
+        "discountType": { "type": "string", "enum": ["percentage", "amount"] }
+      }
+    },
+
+    "discountEntryValues": {
+      "description": "Editable values for one <discount> entry. Paired 1:1 with discountEntryTemplates by index.",
+      "type": "object",
+      "required": ["threshold", "discountValue"],
+      "additionalProperties": false,
+      "properties": {
+        "threshold":     { "type": "number" },
+        "discountValue": { "type": "number" }
+      }
+    },
+
+    "promotionSlotFrozenStructure": {
+      "description": "Every structural aspect of a promotion slot that is reproduced verbatim each season. These values must never be modified by the clarification flow.",
+      "type": "object",
+      "required": [
+        "enabledFlag",
+        "archivedFlag",
+        "searchableFlag",
+        "refinableFlag",
+        "preventRequalifyingFlag",
+        "prorateAcrossEligibleItemsFlag",
+        "exclusivity",
+        "nameLocales",
+        "discountFamily",
+        "qualifyingProducts",
+        "discountedProducts",
+        "disableGlobalExcludedProducts",
+        "maxApplications",
+        "frozenCustomAttributes"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "enabledFlag":                     { "type": "boolean" },
+        "archivedFlag":                    { "type": "boolean" },
+        "searchableFlag":                  { "type": "boolean" },
+        "refinableFlag":                   { "type": "boolean" },
+        "preventRequalifyingFlag":         { "type": "boolean" },
+        "prorateAcrossEligibleItemsFlag":  { "type": "boolean" },
+        "exclusivity": {
+          "type": "string",
+          "enum": ["no", "class", "global"]
+        },
+        "nameLocales": {
+          "description": "Ordered list of xml:lang values present in the source <name> elements. Freezes which locales exist; editableFields.names provides the values.",
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 },
+          "minItems": 1
+        },
+        "discountFamily": {
+          "description": "Which discount element family this slot uses. This is frozen — it determines which XML elements the renderer emits.",
+          "type": "string",
+          "enum": ["simple", "product-amount"]
+        },
+        "simpleDiscountType": {
+          "description": "Present only when discountFamily=simple. 'percentage' or 'amount'. Frozen.",
+          "type": ["string", "null"],
+          "enum": ["percentage", "amount", null]
+        },
+        "discountEntryTemplates": {
+          "description": "Present only when discountFamily=product-amount. One entry per <discount> element. Freezes discount type per tier.",
+          "type": ["array", "null"],
+          "items": { "$ref": "#/$defs/discountEntryTemplate" },
+          "minItems": 1
+        },
+        "qualifyingProducts": {
+          "description": "Frozen <qualifying-products> structure, or null if the element was absent in the source export.",
+          "oneOf": [
+            { "$ref": "#/$defs/qualifyingProductsBlock" },
+            { "type": "null" }
+          ]
+        },
+        "discountedProducts": {
+          "description": "Frozen <discounted-products> structure, or null if the element was absent in the source export.",
+          "oneOf": [
+            { "$ref": "#/$defs/discountedProductsBlock" },
+            { "type": "null" }
+          ]
+        },
+        "disableGlobalExcludedProducts": {
+          "description": "True if <disable-global-excluded-products>true</disable-global-excluded-products> was present. Null if absent.",
+          "type": ["boolean", "null"]
+        },
+        "maxApplications": {
+          "description": "Value of <max-applications> if present. Null if absent.",
+          "type": ["integer", "null"],
+          "minimum": 1
+        },
+        "frozenCustomAttributes": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/frozenCustomAttribute" }
+        }
+      }
+    },
+
+    "promotionSlotEditableFields": {
+      "description": "The small set of per-season values a business user provides for this promotion slot.",
+      "type": "object",
+      "required": ["promotionId", "names", "editableCustomAttributes"],
+      "additionalProperties": false,
+      "properties": {
+        "promotionId": {
+          "description": "The season-specific promotion ID. Updated every season.",
+          "type": "string",
+          "minLength": 1
+        },
+        "names": {
+          "description": "One entry per xml:lang variant, matching nameLocales in frozenStructure.",
+          "type": "array",
+          "items": { "$ref": "#/$defs/nameEntry" },
+          "minItems": 1
+        },
+        "simpleDiscountValue": {
+          "description": "Editable discount value for discountFamily=simple. Null when discountFamily=product-amount.",
+          "type": ["number", "null"]
+        },
+        "discountEntries": {
+          "description": "Editable threshold+value pairs for discountFamily=product-amount. Null when discountFamily=simple. Paired 1:1 with frozenStructure.discountEntryTemplates by index.",
+          "type": ["array", "null"],
+          "items": { "$ref": "#/$defs/discountEntryValues" },
+          "minItems": 1
+        },
+        "editableCustomAttributes": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/editableCustomAttribute" }
+        }
+      }
+    },
+
+    "assignmentSlotFrozenStructure": {
+      "description": "Structural facts about a <promotion-campaign-assignment> that are reproduced verbatim each season.",
+      "type": "object",
+      "required": [
+        "qualifiers",
+        "customerGroups",
+        "rank",
+        "hasStartDate",
+        "hasEndDate"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "qualifiers": {
+          "description": "Frozen <qualifiers> block structure.",
+          "type": "object",
+          "required": ["matchMode", "hasCustomerGroups", "hasSourceCodes", "hasCoupons"],
+          "additionalProperties": false,
+          "properties": {
+            "matchMode":         { "type": "string", "enum": ["any", "all"] },
+            "hasCustomerGroups": { "type": "boolean" },
+            "hasSourceCodes":    { "type": "boolean" },
+            "hasCoupons":        { "type": "boolean" }
+          }
+        },
+        "customerGroups": {
+          "description": "Frozen <customer-groups> block outside <qualifiers>, or null if absent. matchMode and groupIds are frozen.",
+          "oneOf": [
+            {
+              "type": "object",
+              "required": ["matchMode", "groupIds"],
+              "additionalProperties": false,
+              "properties": {
+                "matchMode": { "type": "string", "enum": ["any", "all"] },
+                "groupIds": {
+                  "type": "array",
+                  "items": { "type": "string", "minLength": 1 },
+                  "minItems": 1
+                }
+              }
+            },
+            { "type": "null" }
+          ]
+        },
+        "rank": { "type": "integer", "minimum": 1 },
+        "hasStartDate": {
+          "description": "Whether this assignment has a <start-date> element. Frozen: if false, no start-date is ever generated.",
+          "type": "boolean"
+        },
+        "hasEndDate": {
+          "description": "Whether this assignment has an <end-date> element. Frozen: if false, no end-date is ever generated.",
+          "type": "boolean"
+        }
+      }
+    },
+
+    "assignmentSlotEditableFields": {
+      "description": "Per-season values for a promotion-campaign-assignment slot.",
+      "type": "object",
+      "required": ["promotionId", "campaignId"],
+      "additionalProperties": false,
+      "properties": {
+        "promotionId": { "type": "string", "minLength": 1 },
+        "campaignId":  { "type": "string", "minLength": 1 },
+        "couponIds": {
+          "description": "Editable coupon IDs. Null if the assignment has no <coupons> block.",
+          "type": ["array", "null"],
+          "items": { "type": "string", "minLength": 1 },
+          "minItems": 1
+        },
+        "startDate": {
+          "description": "ISO-8601 date-time string. Null if frozenStructure.hasStartDate is false.",
+          "type": ["string", "null"]
+        },
+        "endDate": {
+          "description": "ISO-8601 date-time string. Null if frozenStructure.hasEndDate is false.",
+          "type": ["string", "null"]
+        }
+      }
+    }
+
+  },
+
+  "properties": {
+
+    "blueprintId": {
+      "description": "Unique identifier for this blueprint version. Typically 'SAS-YYYY'.",
+      "type": "string",
+      "minLength": 1
+    },
+
+    "sourceExport": {
+      "description": "Filename of the SFCC XML export this blueprint was extracted from.",
+      "type": "string",
+      "minLength": 1
+    },
+
+    "extractedAt": {
+      "description": "ISO-8601 timestamp of when this blueprint was extracted.",
+      "type": "string",
+      "minLength": 1
+    },
+
+    "campaignSlot": {
+      "description": "Blueprint representation of the <campaign> element.",
+      "type": "object",
+      "required": ["frozenStructure", "editableFields"],
+      "additionalProperties": false,
+      "properties": {
+        "frozenStructure": {
+          "type": "object",
+          "required": ["enabledFlag", "campaignScope"],
+          "additionalProperties": false,
+          "properties": {
+            "enabledFlag": { "type": "boolean" },
+            "campaignScope": {
+              "type": "object",
+              "required": ["applicableOnline"],
+              "additionalProperties": false,
+              "properties": {
+                "applicableOnline": { "type": "boolean" }
+              }
+            }
+          }
+        },
+        "editableFields": {
+          "type": "object",
+          "required": ["campaignId"],
+          "additionalProperties": false,
+          "properties": {
+            "campaignId": { "type": "string", "minLength": 1 }
+          }
+        }
+      }
+    },
+
+    "promotionSlots": {
+      "description": "Ordered list of promotion slots, preserving source-export order.",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["slotIndex", "frozenStructure", "editableFields"],
+        "additionalProperties": false,
+        "properties": {
+          "slotIndex":       { "type": "integer", "minimum": 0 },
+          "frozenStructure": { "$ref": "#/$defs/promotionSlotFrozenStructure" },
+          "editableFields":  { "$ref": "#/$defs/promotionSlotEditableFields" }
+        }
+      },
+      "minItems": 1
+    },
+
+    "assignmentSlots": {
+      "description": "Ordered list of assignment slots, preserving source-export order.",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["slotIndex", "frozenStructure", "editableFields"],
+        "additionalProperties": false,
+        "properties": {
+          "slotIndex":       { "type": "integer", "minimum": 0 },
+          "frozenStructure": { "$ref": "#/$defs/assignmentSlotFrozenStructure" },
+          "editableFields":  { "$ref": "#/$defs/assignmentSlotEditableFields" }
+        }
+      },
+      "minItems": 1
+    }
+
+  }
+}
